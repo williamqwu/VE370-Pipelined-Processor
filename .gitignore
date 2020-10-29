@@ -1,0 +1,6 @@
+# folders
+/single_cycle/
+/.vscode/
+# files for submission
+*.tar
+*.zip
