@@ -44,7 +44,7 @@ Group Member: <br>
 ## Work Distribution
 @**?**(whoever finishes single processor) system structure <br>
 @**xjy** patch for pipelined system <br>
-@**ygc** forwarding unit <br>
+@**ygc** forwarding unit, FPGA implementation <br>
 @**lyr** hazard detection unit <br>
 @**wqh** synthesis, FPGA implementation, RTL schematic <br>
 @TBD report <br>
