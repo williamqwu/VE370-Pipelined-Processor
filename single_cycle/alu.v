@@ -23,6 +23,7 @@ module alu(
         data2 = {16'b1,instru[15:0]};
       end
     end
+    // $display("ALU_data2: 0x%H",data2);
   end
 
   always @(data1, data2, ALUcontrol) begin
@@ -47,6 +48,7 @@ module alu(
     end else begin
       zero = 0;
     end
+    // $display("ALU_result: 0x%H",ALUresult);
   end
 
 endmodule

@@ -4,3 +4,12 @@
 # files for submission
 *.tar
 *.zip
+# build files for single project
+/single_cycle/p2_single.cache
+/single_cycle/p2_single.hw
+/single_cycle/p2_single.ip_user_files
+/single_cycle/p2_single.sim
+/single_cycle/p2_single.xpr
+/single_cycle/*.str
+/single_cycle/*.jou
+/single_cycle/*.log

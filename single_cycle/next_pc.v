@@ -17,6 +17,11 @@ module next_pc(
   reg [31:0] jump; // jump addr.
   reg zero_alter;
 
+  initial begin
+    next = 32'b0;
+    // $display("NEXT: 0x%H",next);
+  end
+
   always @(old) begin
     old_alter = old + 4;
   end

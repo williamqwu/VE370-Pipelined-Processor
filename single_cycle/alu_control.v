@@ -29,6 +29,8 @@ module alu_control(
             ;
         endcase
       end
+      2'b11: 
+        ALUcontrol = 4'b0000;
       default:
         ;
     endcase

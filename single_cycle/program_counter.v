@@ -6,7 +6,10 @@ module program_counter(
   output reg [31:0] out // the output address
 );
   
-  // TODO: initial begin of out?
+  initial begin
+    out = 32'b0;
+    // $display("Init PC: 0x%H",out);
+  end
 
   always @(posedge clk) begin
     out = next;

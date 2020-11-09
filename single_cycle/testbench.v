@@ -12,16 +12,19 @@ module testbench;
   );
 
   initial begin
+    #0
     clk = 0;
-    currTime = 0;
-    $readmemb("testcase.txt",uut.asset_im.mem);
+    currTime = -10;
+    uut.asset_pc.out = 32'b0;
     $display("===============================================");
-    #590 $display("===============================================");
-    #600 $stop;
+
+    #989 $display("===============================================");
+    #990 $stop;
   end
 
-  always #10 begin
-    $display("Time: %d, CLK = %d, PC = 0x%H",currTime, clk, uut.asset_pc.pc_out);
+  always @(posedge clk) begin
+    $display("Time: %d, CLK = %d, PC = 0x%H",currTime, clk, uut.asset_pc.out);
+    // #6; // wait for writing back
     $display("[$s0] = 0x%H, [$s1] = 0x%H, [$s2] = 0x%H",uut.asset_reg.RegData[16],uut.asset_reg.RegData[17],uut.asset_reg.RegData[18]);
     $display("[$s3] = 0x%H, [$s4] = 0x%H, [$s5] = 0x%H",uut.asset_reg.RegData[19],uut.asset_reg.RegData[20],uut.asset_reg.RegData[21]);
     $display("[$s6] = 0x%H, [$s7] = 0x%H, [$t0] = 0x%H",uut.asset_reg.RegData[22],uut.asset_reg.RegData[23],uut.asset_reg.RegData[8]);
@@ -29,6 +32,10 @@ module testbench;
     $display("[$t4] = 0x%H, [$t5] = 0x%H, [$t6] = 0x%H",uut.asset_reg.RegData[12],uut.asset_reg.RegData[13],uut.asset_reg.RegData[14]);
     $display("[$t7] = 0x%H, [$t8] = 0x%H, [$t9] = 0x%H",uut.asset_reg.RegData[15],uut.asset_reg.RegData[24],uut.asset_reg.RegData[25]);
 
+    // currTime = currTime + 10;
+  end
+
+  always #10 begin
     clk = ~clk;
     currTime = currTime + 10;
   end

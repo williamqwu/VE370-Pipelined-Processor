@@ -1,8 +1,14 @@
 // main driver program for single-cycle processor
 
 `timescale 1ns / 1ps
-`include "program_counter.v"
+`include "alu_control.v"
+`include "alu.v"
+`include "control.v"
+`include "data_memory.v"
+`include "instru_memory.v"
 `include "next_pc.v"
+`include "program_counter.v"
+`include "register.v"
 
 module main(
   input clk // clock signal for PC and RD
@@ -14,7 +20,7 @@ module main(
   wire [5:0] im_ctr;
   wire [31:0] im_instru;
 
-  wire [31:0] r_wbdata,
+  wire [31:0] r_wbdata, // dm_out
               r_read1,
               r_read2;
 
@@ -34,7 +40,7 @@ module main(
   wire c_zero;
   wire [31:0] alu_result;
 
-  wire [31:0] dm_out;
+  // wire [31:0] dm_out;
 
 program_counter asset_pc(
   .clk (clk),
@@ -95,7 +101,7 @@ data_memory asset_dm(
   .MemWrite (c_MemWrite),
   .MemRead (c_MemRead),
   .MemtoReg (c_MemtoReg),
-  .rData (dm_out)
+  .rData (r_wbdata)
 );
 
 next_pc asset_nextPc(

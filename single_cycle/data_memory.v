@@ -21,19 +21,20 @@ module data_memory(
     end
   end
 
-  always @(addr or wData or MemWrite or MemRead or MemtoReg) begin
+  always @(addr or wData or MemWrite or MemRead or MemtoReg or ALUresult) begin
     if (MemRead == 1) begin
       if (MemtoReg == 1) begin
         rData = mem[addr];
       end else begin
-        rData = ALUresult;
+        rData = ALUresult; // X ?
       end
     end else begin
-      rData = 32'b0; // X
+      rData = ALUresult;
     end
     if (MemWrite == 1) begin
       mem[addr] = wData;
     end
+    // $display("WriteData (pending): 0x%H",rData);
   end
 
 endmodule

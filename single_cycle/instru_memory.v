@@ -14,7 +14,17 @@ module instru_memory(
   parameter SIZE_IM = 128; // size of this memory, by default 128*32
   reg [31:0] mem [SIZE_IM-1:0]; // instruction memory
 
-  // FIXME: initially read the text file
+  integer n;
+  initial begin
+    for(n=0;n<SIZE_IM;n=n+1) begin
+      mem[n] = 32'b0;
+    end
+    $readmemb("C:\\Users\\William Wu\\Documents\\Mainframe Files\\UMJI-SJTU\\1 Academy\\20 Fall\\VE370\\Project\\p2\\single_cycle\\testcase.txt",mem);
+    for(n=0;n<SIZE_IM;n=n+1) begin
+      // $display("0x%H",mem[n]);
+    end
+
+  end
 
   assign instru = mem[addr >> 2]; // FIXME: the interval of mem
   assign ctr = instru[31:26];
