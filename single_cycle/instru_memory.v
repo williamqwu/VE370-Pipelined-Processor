@@ -14,7 +14,7 @@ module instru_memory(
   parameter SIZE_IM = 128; // size of this memory, by default 128*32
   reg [31:0] mem [SIZE_IM-1:0]; // instruction memory
 
-  // TODO: initially read the text file
+  // FIXME: initially read the text file
 
   assign instru = mem[addr >> 2]; // FIXME: the interval of mem
   assign ctr = instru[31:26];

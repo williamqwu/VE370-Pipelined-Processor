@@ -48,7 +48,7 @@ instru_memory asset_im(
   .instru (im_instru)
 );
 
-register asset_register(
+register asset_reg(
   .clk (clk),
   .instru (im_instru),
   .RegWrite (c_RegWrite),
