@@ -37,6 +37,8 @@ module alu(
         ALUresult = data1 - data2;
       4'b0111: // SLT
         ALUresult = (data1 < data2) ? 1 : 0;
+      4'b1100: // NOR
+        ALUresult = data1 |~ data2;
       default:
         ;
     endcase

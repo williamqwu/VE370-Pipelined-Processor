@@ -7,6 +7,7 @@ module next_pc(
     // [25-0] used for shift-left-2
   input Jump,
   input Branch,
+  input Bne,
   input zero,
   output reg [31:0] next
 );
@@ -14,9 +15,17 @@ module next_pc(
   reg [31:0] sign_ext;
   reg [31:0] old_alter; // pc+4
   reg [31:0] jump; // jump addr.
+  reg zero_alter;
 
   always @(old) begin
     old_alter = old + 4;
+  end
+
+  always @(zero,Bne) begin
+    zero_alter = zero;
+    if (Bne == 1) begin
+      zero_alter = ! zero_alter;
+    end
   end
 
   always @(instru) begin
@@ -36,9 +45,9 @@ module next_pc(
     jump = {old_alter[31:28],jump[27:0]};
   end
   
-  always @(old_alter,sign_ext,jump,Branch,zero,Jump) begin
+  always @(old_alter,sign_ext,jump,Branch,zero_alter,Jump) begin
     // assign next program counter value
-    if (Branch == 1 & zero == 1) begin
+    if (Branch == 1 & zero_alter == 1) begin
       next = old_alter + sign_ext;
     end else begin
       next = old_alter;

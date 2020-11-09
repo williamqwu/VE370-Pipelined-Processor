@@ -12,7 +12,7 @@ module alu_control(
         ALUcontrol = 4'b0010;
       2'b01:
         ALUcontrol = 4'b0110;
-      2'b10: 
+      2'b10: begin
         // FIXME: check completenesss
         case (instru)
           6'b100000:
@@ -28,6 +28,7 @@ module alu_control(
           default:
             ;
         endcase
+      end
       default:
         ;
     endcase
