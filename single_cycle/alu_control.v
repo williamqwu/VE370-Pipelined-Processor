@@ -7,23 +7,23 @@ module alu_control(
 );
 
   always @(ALUOp, instru) begin
+    // $display("** ALUOp: 0x%H",ALUOp);
     case (ALUOp) 
       2'b00:
         ALUcontrol = 4'b0010;
       2'b01:
         ALUcontrol = 4'b0110;
       2'b10: begin
-        // FIXME: check completenesss
         case (instru)
-          6'b100000:
+          6'b100000: // add
             ALUcontrol = 4'b0010;
-          6'b100010:
+          6'b100010: // sub
             ALUcontrol = 4'b0110;
-          6'b100100:
+          6'b100100: // and
             ALUcontrol = 4'b0000;
-          6'b100101:
+          6'b100101: // or
             ALUcontrol = 4'b0001;
-          6'b101010:
+          6'b101010: // slt
             ALUcontrol = 4'b0111;
           default:
             ;

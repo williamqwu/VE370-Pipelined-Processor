@@ -18,6 +18,7 @@ module main(
               pc_out;
 
   wire [5:0] im_ctr;
+  wire [5:0] im_funcode;
   wire [31:0] im_instru;
 
   wire [31:0] r_wbdata, // dm_out
@@ -51,6 +52,7 @@ program_counter asset_pc(
 instru_memory asset_im(
   .addr (pc_out),
   .ctr (im_ctr),
+  .funcode (im_funcode),
   .instru (im_instru)
 );
 
@@ -76,7 +78,7 @@ alu asset_alu(
 
 alu_control asset_aluControl(
   .ALUOp (c_ALUOp),
-  .instru (im_ctr),
+  .instru (im_funcode),
   .ALUcontrol (c_ALUcontrol)
 );
 

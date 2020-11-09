@@ -48,7 +48,7 @@ module alu(
     end else begin
       zero = 0;
     end
-    // $display("ALU_result: 0x%H",ALUresult);
+    // $display("ALUcontrol | d1 | d2 | ALU_result: 0x%H | 0x%H | 0x%H | 0x%H",ALUcontrol,data1,data2,ALUresult);
   end
 
 endmodule

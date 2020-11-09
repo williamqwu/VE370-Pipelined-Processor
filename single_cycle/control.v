@@ -27,6 +27,7 @@ module control(
   end
 
   always @(instru) begin
+    // $display("** code: 0x%H",instru[31:26]);
     case (instru[31:26])
       6'b000000: begin// ARITHMETIC
         RegDst = 1;

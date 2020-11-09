@@ -4,6 +4,7 @@ module instru_memory(
   // input clk,
   input [31:0] addr,
   output [5:0] ctr, // [31-26]
+  output [5:0] funcode, // [5-0]
   // output reg [4:0] read1, // [25-21]
   // output reg [4:0] read2, // [20-16]
   // output reg [4:0] write, // [15-11]
@@ -28,6 +29,7 @@ module instru_memory(
 
   assign instru = mem[addr >> 2]; // FIXME: the interval of mem
   assign ctr = instru[31:26];
+  assign funcode = instru[5:0];
   // assign num = instru[15:0];
 
 endmodule
