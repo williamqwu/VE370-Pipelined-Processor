@@ -97,7 +97,8 @@ control asset_control(
 );
 
 data_memory asset_dm(
-  .addr (im_instru),
+  .clk (clk),
+  .addr (alu_result), // im_instru
   .wData (r_read2),
   .ALUresult (alu_result),
   .MemWrite (c_MemWrite),

@@ -24,9 +24,9 @@ module register(
   assign ReadData1 = RegData[instru[25:21]];
   assign ReadData2 = RegData[instru[20:16]];
 
-  always @(posedge clk) begin
-    // $display("Reg_WriteData: 0x%H",WriteData);
+  always @(posedge clk) begin // RegWrite, RegDst, WriteData, instru)
     if (RegWrite == 1'b1) begin // FIXME: timing issue?
+      $display("Reg_WriteData: 0x%H",WriteData);
       if (RegDst == 1'b0) begin
         RegData[instru[20:16]] = WriteData;
       end else begin

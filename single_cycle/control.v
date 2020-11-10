@@ -125,8 +125,18 @@ module control(
         ALUOp = 2'b01;
         Jump = 1;
       end
-      default:
-        ;
+      default: begin
+        RegDst = 0; // X
+        ALUSrc = 0;
+        MemtoReg = 0; // X
+        RegWrite = 0;
+        MemRead = 0;
+        MemWrite = 0;
+        Branch = 0;
+        Bne = 0;
+        ALUOp = 2'b00;
+        Jump = 0;        
+      end
     endcase
   end
 

@@ -18,9 +18,9 @@ module instru_memory(
   integer n;
   initial begin
     for(n=0;n<SIZE_IM;n=n+1) begin
-      mem[n] = 32'b0;
+      mem[n] = 32'b11111100000000000000000000000000;
     end
-    $readmemb("C:\\Users\\William Wu\\Documents\\Mainframe Files\\UMJI-SJTU\\1 Academy\\20 Fall\\VE370\\Project\\p2\\single_cycle\\testcase.txt",mem);
+    $readmemb("C:\\Users\\William Wu\\Documents\\Mainframe Files\\UMJI-SJTU\\1 Academy\\20 Fall\\VE370\\Project\\p2\\single_cycle\\testcases\\testcase.txt",mem);
     for(n=0;n<SIZE_IM;n=n+1) begin
       // $display("0x%H",mem[n]);
     end

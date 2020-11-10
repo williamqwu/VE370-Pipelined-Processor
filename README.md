@@ -15,7 +15,7 @@ Group Member: <br>
     - beq
     - bne
     - j
-  - **Instruction Memory** `[clock]`
+  - Instruction Memory
   - **Register** `[clock]`
   - ALU
     - add

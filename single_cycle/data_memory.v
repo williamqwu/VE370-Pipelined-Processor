@@ -1,6 +1,7 @@
 `timescale 1ns / 1ps
 
 module data_memory(
+  input clk,
   input [31:0] addr,
   input [31:0] wData,
   input [31:0] ALUresult,
@@ -21,20 +22,24 @@ module data_memory(
     end
   end
 
-  always @(addr or wData or MemWrite or MemRead or MemtoReg or ALUresult) begin
+  always @(addr or MemRead or MemtoReg or ALUresult) begin
     if (MemRead == 1) begin
       if (MemtoReg == 1) begin
         rData = mem[addr];
+        $display("lw data: 0x%H @addr: 0x%H",rData,addr);
       end else begin
         rData = ALUresult; // X ?
       end
     end else begin
       rData = ALUresult;
     end
+  end
+
+  always @(posedge clk) begin // MemWrite, wData, addr
     if (MemWrite == 1) begin
+      $display("MemWrite: 0x%H @addr: 0x%H",wData,addr);
       mem[addr] = wData;
     end
-    // $display("WriteData (pending): 0x%H",rData);
   end
 
 endmodule
