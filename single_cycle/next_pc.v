@@ -31,6 +31,7 @@ module next_pc(
     if (Bne == 1) begin
       zero_alter = ! zero_alter;
     end
+    // $display("zero: %d | zero_alter: %d",zero,zero_alter);
   end
 
   always @(instru) begin
@@ -38,12 +39,17 @@ module next_pc(
     jump = {4'b0,instru[25:0],2'b0};
 
     // sign-extension
+    // $display("original instru: 0x%H",instru);
     if (instru[15] == 1'b0) begin
+      // $display("next_pc:: positive addr_dev");
       sign_ext = {16'b0,instru[15:0]};
     end else begin
-      sign_ext = {16'b1,instru[15:0]};
+      // $display("next_pc:: negative addr_dev");
+      sign_ext = {{16{1'b1}},instru[15:0]};
     end
-    sign_ext = {instru[29:0],2'b0}; // shift left
+    // $display("sign_ext: 0x%H",sign_ext);
+    sign_ext = {sign_ext[29:0],2'b0}; // shift left
+    // $display("sign_ext: 0x%H",sign_ext);
   end
 
   always @(instru or old_alter or jump) begin
@@ -53,11 +59,14 @@ module next_pc(
   always @(old_alter,sign_ext,jump,Branch,zero_alter,Jump) begin
     // assign next program counter value
     if (Branch == 1 & zero_alter == 1) begin
+      // $display("Taking branch");
       next = old_alter + sign_ext;
     end else begin
+      // $display("Normal proceeding");
       next = old_alter;
     end
-    if (Jump == 1) begin 
+    if (Jump == 1) begin
+      // $display("Taking jump");
       next = jump;
     end
   end

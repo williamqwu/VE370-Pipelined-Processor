@@ -26,7 +26,7 @@ module register(
 
   always @(posedge clk) begin // RegWrite, RegDst, WriteData, instru)
     if (RegWrite == 1'b1) begin // FIXME: timing issue?
-      $display("Reg_WriteData: 0x%H",WriteData);
+      // $display("Reg_WriteData: 0x%H",WriteData);
       if (RegDst == 1'b0) begin
         RegData[instru[20:16]] = WriteData;
       end else begin

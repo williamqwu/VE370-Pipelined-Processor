@@ -26,7 +26,7 @@ module data_memory(
     if (MemRead == 1) begin
       if (MemtoReg == 1) begin
         rData = mem[addr];
-        $display("lw data: 0x%H @addr: 0x%H",rData,addr);
+        // $display("lw data: 0x%H @addr: 0x%H",rData,addr);
       end else begin
         rData = ALUresult; // X ?
       end
@@ -37,7 +37,7 @@ module data_memory(
 
   always @(posedge clk) begin // MemWrite, wData, addr
     if (MemWrite == 1) begin
-      $display("MemWrite: 0x%H @addr: 0x%H",wData,addr);
+      // $display("MemWrite: 0x%H @addr: 0x%H",wData,addr);
       mem[addr] = wData;
     end
   end

@@ -7,9 +7,13 @@ module program_counter(
 );
   
   initial begin
-    out = 32'b0;
+    out = -4; // NEVER REACHED ADDRESS
     // $display("Init PC: 0x%H",out);
   end
+
+  // always @(next) begin
+  //   $display("Next PC: 0x%H",next);
+  // end
 
   always @(posedge clk) begin
     out = next;

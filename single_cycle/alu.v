@@ -20,7 +20,7 @@ module alu(
       if (instru[15] == 1'b0) begin
         data2 = {16'b0,instru[15:0]};
       end else begin
-        data2 = {16'b1,instru[15:0]};
+        data2 = {{16{1'b1}},instru[15:0]};
       end
     end
     // $display("ALU_data2: 0x%H",data2);
@@ -48,7 +48,7 @@ module alu(
     end else begin
       zero = 0;
     end
-    $display("ALUcontrol | d1 | d2 | ALU_result: 0x%H | 0x%H | 0x%H | 0x%H",ALUcontrol,data1,data2,ALUresult);
+    // $display("ALUcontrol | d1 | d2 | ALU_result: 0x%H | 0x%H | 0x%H | 0x%H",ALUcontrol,data1,data2,ALUresult);
   end
 
 endmodule

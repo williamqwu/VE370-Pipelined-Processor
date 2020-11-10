@@ -15,14 +15,16 @@ module testbench;
     #0
     clk = 0;
     currTime = -10;
-    uut.asset_pc.out = 32'b0;
-    $display("===============================================");
+    uut.asset_pc.out = -4;
+    $display("============================================================");
 
-    #989 $display("===============================================");
-    #990 $stop;
+    #988 $display("============================================================");
+    #989 $stop;
   end
 
   always @(posedge clk) begin
+    $display("------------------------------------------------------------");
+    #1;
     $display("Time: %d, CLK = %d, PC = 0x%H",currTime, clk, uut.asset_pc.out);
     // #6; // wait for writing back
     $display("[$s0] = 0x%H, [$s1] = 0x%H, [$s2] = 0x%H",uut.asset_reg.RegData[16],uut.asset_reg.RegData[17],uut.asset_reg.RegData[18]);
