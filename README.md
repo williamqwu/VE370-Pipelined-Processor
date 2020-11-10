@@ -49,3 +49,9 @@ Group Member: <br>
 @**wqh** synthesis, FPGA implementation, RTL schematic <br>
 @TBD report <br>
 @TBD bonus <br>
+
+## Note for Tricky Issues regarding Verilog
+1. `{16{1'b1}}` vs. `16'b1`
+2. delay in `initial`
+3. sync vs async (which unit need to be controlled by `clk`)
+4. *Nothing more. The rest is just a LinkGame.*
