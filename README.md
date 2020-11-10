@@ -47,7 +47,7 @@ Group Member: <br>
 @**ygc** forwarding unit, FPGA implementation <br>
 @**lyr** hazard detection unit <br>
 @**wqh** synthesis, FPGA implementation, RTL schematic <br>
-@TBD report <br>
+@TBD report https://www.overleaf.com/1952724924yppjbdyhxccp
 @TBD bonus <br>
 
 ## Note for Tricky Issues regarding Verilog
