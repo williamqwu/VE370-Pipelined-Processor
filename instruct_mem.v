@@ -21,10 +21,10 @@
 
 
 
-module instruct_mem(Addr,Clk,Inst);//Ö¸Áî´æ´¢Æ÷
+module instruct_mem(Addr,Clk,Inst);//æŒ‡ä»¤å­˜å‚¨å™¨
     input[31:0]Addr;
     input Clk;
-    //input InsMemRW;//×´Ì¬Îª'0'£¬Ğ´Ö¸Áî¼Ä´æÆ÷£¬·ñÔòÎª¶ÁÖ¸Áî¼Ä´æÆ÷
+    //input InsMemRW;//çŠ¶æ€ä¸º'0'ï¼Œå†™æŒ‡ä»¤å¯„å­˜å™¨ï¼Œå¦åˆ™ä¸ºè¯»æŒ‡ä»¤å¯„å­˜å™¨
     output[31:0]Inst;
     reg [7:0]Rom[255:0];
     //assign Inst=Rom[Addr[6:2]];

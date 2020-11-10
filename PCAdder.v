@@ -21,8 +21,8 @@
 
 
 module PCAdder(PC_o,PCadd4);
-    input [31:0] PC_o;//Æ«ÒÆÁ¿
-    output [31:0] PCadd4;//ĞÂÖ¸ÁîµØÖ·
+    input [31:0] PC_o;//åç§»é‡
+    output [31:0] PCadd4;//æ–°æŒ‡ä»¤åœ°å€
     wire Cout;
     CLA32 cla32(PC_o,4,0, PCadd4, Cout);
 endmodule
