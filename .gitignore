@@ -16,5 +16,8 @@
 /single_cycle/*.log
 /single_cycle/.Xil
 
+#build files for pipelined project
+/build
+
 # misc
 /opo

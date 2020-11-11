@@ -4,7 +4,7 @@
 module register(
   input clk,
   input [31:0] instru, // the raw 32-bit instruction
-  input RegWrite,
+  input RegWrite, // from WB stage!
   input RegDst,
   input [31:0] WriteData, // from WB stage
   input [4:0] WriteReg, // from WB stage
@@ -28,7 +28,7 @@ module register(
 
   always @(posedge clk) begin // RegWrite, RegDst, WriteData, instru)
     if (RegWrite == 1'b1) begin
-      // $display("Reg_WriteData: 0x%H | WriteReg: %d",WriteData, WriteReg);
+      $display("Reg_WriteData: 0x%H | WriteReg: %d",WriteData, WriteReg);
       RegData[WriteReg] = WriteData;
     end
   end

@@ -126,7 +126,7 @@ module main(
   register asset_reg(
     .clk (clk),
     .instru (instru_b),
-    .RegWrite (c_RegWrite_1_a),
+    .RegWrite (c_RegWrite_3_b), // from WB stage
     .RegDst (c_RegDst_1_a),
     .WriteData (memWriteData_b), 
     .WriteReg (WriteReg_d), 
@@ -171,7 +171,7 @@ module main(
     .ALUOp (c_ALUOp_1_b),
     .MemWrite (c_MemWrite_1_b),
     .ALUSrc (c_ALUSrc_1_b),
-    .RegWrite (c_RegWrite_1_a),
+    .RegWrite (c_RegWrite_1_b),
 
     .nextPc_in (nextpc_b),
     .nextPc (nextpc_d),
