@@ -12,6 +12,7 @@ module alu(
   input [1:0] c_data1_src,
   input [1:0] c_data2_src,
 
+  output reg [31:0] data2_fin, // connect to DM
   output reg zero,
   output reg [31:0] ALUresult
 );
@@ -34,13 +35,34 @@ module alu(
   end
 
   reg [31:0] data1_fin;
-  reg [31:0] data2_fin;
+  // reg [31:0] data2_fin;
 
 
-  always @(data1,data2,ex_mem_fwd,mem_wb_fwd,c_data1_src,c_data2_src) begin
-    // TODO: implement this
+  always @(data1,data2,ex_mem_fwd,mem_wb_fwd,c_data1_src) begin
+    case (c_data1_src)
+      2'b00: // from current stage
+        data1_fin = data1;
+      2'b10: // from EX/MEM
+        data1_fin = ex_mem_fwd;
+      2'b01: // from from MEM/WB
+        data1_fin = mem_wb_fwd;
+      default:
+        $display ("Error: data1_src wrong.");
+    endcase
   end
 
+  always @(data1,data2,ex_mem_fwd,mem_wb_fwd,c_data2_src) begin
+    case (c_data2_src)
+      2'b00: // from current stage
+        data2_fin = data2;
+      2'b10: // from EX/MEM
+        data2_fin = ex_mem_fwd;
+      2'b01: // from from MEM/WB
+        data2_fin = mem_wb_fwd;
+      default:
+        $display ("Error: data2_src wrong.");
+    endcase
+  end
 
   always @(data1_fin, data2_fin, ALUcontrol) begin
     case (ALUcontrol)

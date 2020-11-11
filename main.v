@@ -47,6 +47,11 @@ module main(
 
   wire [3:0] ALUcontrol_out;
 
+  wire [1:0] c_data1_src_w; // forward
+  wire [1:0] c_data2_src_w;
+
+  wire [31:0] rData2_ex_fwd;
+
   wire c_Jump_2_b,c_Branch_2_b,c_Bne_2_b,c_MemRead_2_b,
        c_MemtoReg_2_b,c_MemWrite_2_b,c_RegWrite_2_b;
   wire zero_a,zero_b;
@@ -151,7 +156,13 @@ module main(
   );
 
   forward asset_forward(
-    // TODO
+    .ex_instru (instru_d),
+    .ex_mem_wReg (WriteReg_b),
+    .mem_wb_wReg (WriteReg_d),
+    .c_ex_mem_RegWrite (c_RegWrite_2_b),
+    .c_mem_wb_RegWrite (c_RegWrite_3_b),
+    .c_data1_src (c_data1_src_w),
+    .c_data2_src (c_data2_src_w)
   );
 
   alu asset_alu(
@@ -162,8 +173,9 @@ module main(
     .ALUcontrol (ALUcontrol_out),
     .ex_mem_fwd (ALUresult_b),
     .mem_wb_fwd (memWriteData_b),
-    .c_data1_src (), // TODO
-    .c_data2_src (),
+    .c_data1_src (c_data1_src_w),
+    .c_data2_src (c_data2_src_w),
+    .data2_fin (rData2_ex_fwd),
     .zero (zero_a),
     .ALUresult (ALUresult_a)
   );
@@ -197,7 +209,7 @@ module main(
   data_memory asset_dm(
     .clk (clk),
     .addr (ALUresult_b),
-    .wData (TBD), // TODO: suppose to be reg.read2 | forward
+    .wData (rData2_ex_fwd), // reg.read2 | forward
     .ALUresult (ALUresult_b),
     .MemWrite (c_MemWrite_2_b),
     .MemRead (c_MemRead_2_b),
