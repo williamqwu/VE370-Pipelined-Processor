@@ -7,6 +7,7 @@ module program_counter(
   input clk,
   input [31:0] bj_next, // the input address; result from next stage
   input [31:0] normal_next, // normal next pc (pc+4)
+  input c_if_flush, // if not asserted, pc=pc+4
   input c_PCWrite, // if not asserted, the PC won't move on 
   output reg [31:0] out // the output address
 );
@@ -23,7 +24,13 @@ module program_counter(
   // end
 
   always @(posedge clk) begin
-    if (c_PCWrite == 1) out = normal_next;
+    if (c_PCWrite == 1) begin
+      if (c_if_flush == 0) begin
+        out = normal_next;
+      end else begin
+        out = bj_next;
+      end
+    end
   end
 
 endmodule

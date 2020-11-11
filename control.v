@@ -15,6 +15,10 @@ module control(
   output reg MemWrite,
   output reg ALUSrc,
   output reg RegWrite
+
+  // output reg c_if_flush,
+  // output reg c_id_flush, // TODO: ALU+beq
+  // output reg c_ex_flush // TODO: MEM+beq
 );
   
   // TODO: add three more control signals: IF/ID/EX Flush
@@ -30,6 +34,9 @@ module control(
     MemWrite = 0;
     ALUSrc = 0;
     RegWrite = 0;
+    // c_if_flush = 0;
+    // c_id_flush = 0;
+    // c_ex_flush = 0;
   end
 
   always @(*) begin

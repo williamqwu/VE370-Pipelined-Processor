@@ -47,6 +47,8 @@ module main(
               r_read2_b;
   wire [31:0] instru_d;
 
+  wire c_if_flush;
+
   wire c_PCWrite_w;
   wire c_IFIDWrite_w;
   wire c_clearControl_w;
@@ -60,7 +62,7 @@ module main(
 
   wire c_Jump_2_b,c_Branch_2_b,c_Bne_2_b,c_MemRead_2_b,
        c_MemtoReg_2_b,c_MemWrite_2_b,c_RegWrite_2_b;
-  wire zero_a,zero_b;
+  wire zero_a,zero_b,zero_reg;
   wire [31:0] ALUresult_a, ALUresult_b;
   wire [4:0] WriteReg_b;
   
@@ -74,6 +76,7 @@ module main(
     .clk (clk),
     .bj_next (pc_in),
     .normal_next (normal_next_pc),
+    .c_if_flush (c_if_flush),
     .c_PCWrite (c_PCWrite_w),
     .out (nextpc_a)
   );
@@ -88,6 +91,7 @@ module main(
   pr_if_id asset_ifid(
     .clk (clk),
     .c_IFIDWrite (c_IFIDWrite_w),
+    .c_if_flush (c_if_flush),
     .ctr_in (ctr_a),
     .funcode_in (funcode_a),
     .instru_in (instru_a),
@@ -105,8 +109,9 @@ module main(
     .Jump (c_Jump_1_a),
     .Branch (c_Branch_1_a),
     .Bne (c_Bne_1_a),
-    .zero (TBD), // TODO
-    .next (pc_in)
+    .zero (zero_reg),
+    .next (pc_in),
+    .c_if_flush (c_if_flush)
   );
 
   hazard_det asset_hDet(
@@ -126,7 +131,8 @@ module main(
     .WriteData (memWriteData_b), 
     .WriteReg (WriteReg_d), 
     .ReadData1 (r_read1_a),
-    .ReadData2 (r_read2_a)
+    .ReadData2 (r_read2_a),
+    .reg_zero (zero_reg)
   );
 
   control asset_control(
@@ -231,7 +237,7 @@ module main(
     .zero_in (zero_a),
     .ALUresult_in (ALUresult_a),
     .instru (instru_d),
-    .zero (zero_b),
+    .zero (zero_b), // no longer necessary
     .ALUresult (ALUresult_b),
     .WriteReg (WriteReg_b)
   );

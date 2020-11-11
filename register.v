@@ -9,12 +9,13 @@ module register(
   input [31:0] WriteData, // from WB stage
   input [4:0] WriteReg, // from WB stage
   output [31:0] ReadData1,
-  output [31:0] ReadData2
+  output [31:0] ReadData2,
+  output reg reg_zero // comparator result
 );
  
   reg [31:0] RegData [31:0]; // register data
   
-  // initialize the regester data
+  // initialize the register data
   integer i;
   initial begin
     for(i=0;i<32;i=i+1) begin
@@ -32,6 +33,12 @@ module register(
     end
   end
 
-  // TODO: add a comparator that handles branch hazard
+  always @(*) begin
+    if (ReadData1 == ReadData2) begin 
+      reg_zero = 1;
+    end else begin
+      reg_zero = 0;
+    end
+  end
 
 endmodule

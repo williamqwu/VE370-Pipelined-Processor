@@ -10,8 +10,9 @@ module next_pc(
   input Jump, // ID.control
   input Branch,
   input Bne,
-  input zero, // TODO: it now depends on the RG. comparator.
-  output reg [31:0] next
+  input zero, // it now depends on the RG. comparator.
+  output reg [31:0] next,
+  output reg c_if_flush // IF.Flush
 );
 
   // no connection with Hazard-detection
@@ -60,18 +61,21 @@ module next_pc(
     jump = {old_alter[31:28],jump[27:0]};
   end
   
-  always @(old_alter,sign_ext,jump,Branch,zero_alter,Jump) begin
+  always @(*) begin
     // assign next program counter value
     if (Branch == 1 & zero_alter == 1) begin
       // $display("Taking branch");
       next = old_alter + sign_ext;
+      c_if_flush = 1;
     end else begin
       // $display("Normal proceeding");
       next = old_alter;
+      c_if_flush = 0;
     end
     if (Jump == 1) begin
       // $display("Taking jump");
       next = jump;
+      c_if_flush = 1;
     end
   end
 
