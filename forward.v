@@ -27,7 +27,7 @@ module forward(
     end
   end
 
-  always @(ex_instru,ex_mem_wReg,mem_wb_wReg,c_ex_mem_RegWrite,c_mem_wb_RegWrite) begin
+  always @(*) begin
     // $display("ex_mem: 0x%H | mem_wb: 0x%H ",ex_mem_instru,mem_wb_instru);
     if(c_ex_mem_RegWrite==1 & (ex_mem_wReg != 0) & (ex_mem_wReg == ex_instru[25:21])) begin
       c_data1_src = 2'b10; // from EX/MEM
@@ -37,9 +37,10 @@ module forward(
     end else begin
       c_data1_src = 2'b00; // from current stage
     end
+    $display ("DATA1_FWD:: 0x%H | 0x%H | 0x%H",c_mem_wb_RegWrite,mem_wb_wReg,ex_instru);
   end
 
-  always @(ex_instru,ex_mem_wReg,mem_wb_wReg,c_ex_mem_RegWrite,c_mem_wb_RegWrite) begin
+  always @(*) begin
     if(c_ex_mem_RegWrite==1 & (ex_mem_wReg != 0) & (ex_mem_wReg == ex_instru[20:16])) begin
       c_data2_src = 2'b10; // from EX/MEM
     end else if (c_mem_wb_RegWrite==1 & (mem_wb_wReg != 0) & (mem_wb_wReg == ex_instru[20:16]) &

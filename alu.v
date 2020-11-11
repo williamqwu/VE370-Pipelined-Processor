@@ -85,7 +85,7 @@ module alu(
     end
   end
 
-  always @(data1_fin, data2_fin, ALUcontrol) begin
+  always @(*) begin
     case (ALUcontrol)
       4'b0000: // AND
         ALUresult = data1_fin & data2_fin;

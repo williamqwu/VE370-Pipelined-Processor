@@ -63,19 +63,20 @@ module next_pc(
   
   always @(*) begin
     // assign next program counter value
-    if (Branch == 1 & zero_alter == 1) begin
-      // $display("Taking branch");
-      next = old_alter + sign_ext;
-      c_if_flush = 1;
-    end else begin
-      // $display("Normal proceeding");
-      next = old_alter;
-      c_if_flush = 0;
-    end
     if (Jump == 1) begin
       // $display("Taking jump");
       next = jump;
       c_if_flush = 1;
+    end else begin
+      if (Branch == 1 & zero_alter == 1) begin
+        // $display("Taking branch");
+        next = old_alter + sign_ext;
+        c_if_flush = 1;
+      end else begin
+        // $display("Normal proceeding");
+        next = old_alter;
+        c_if_flush = 0;
+      end
     end
   end
 

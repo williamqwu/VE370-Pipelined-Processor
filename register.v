@@ -8,8 +8,8 @@ module register(
   input RegDst,
   input [31:0] WriteData, // from WB stage
   input [4:0] WriteReg, // from WB stage
-  output [31:0] ReadData1,
-  output [31:0] ReadData2,
+  output reg [31:0] ReadData1,
+  output reg [31:0] ReadData2,
   output reg reg_zero // comparator result
 );
  
@@ -23,8 +23,19 @@ module register(
     end
   end
 
-  assign ReadData1 = RegData[instru[25:21]];
-  assign ReadData2 = RegData[instru[20:16]];
+  always @(*) begin
+    if(WriteReg==instru[25:21] && RegWrite==1) begin
+      ReadData1 = WriteData;
+    end else begin
+      ReadData1 = RegData[instru[25:21]];
+    end
+    
+    if(WriteReg==instru[20:16] && RegWrite==1) begin
+      ReadData2 = WriteData;
+    end else begin
+      ReadData2 = RegData[instru[20:16]];
+    end
+  end
 
   always @(posedge clk) begin // RegWrite, RegDst, WriteData, instru)
     if (RegWrite == 1'b1) begin
