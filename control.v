@@ -1,5 +1,7 @@
 `timescale 1ns / 1ps
 
+// in stage ID
+
 module control(
   input [31:0] instru,
   output reg RegDst,
@@ -13,7 +15,10 @@ module control(
   output reg ALUSrc,
   output reg RegWrite
 );
-
+  
+  // TODO: add three more control signals: IF/ID/EX Flush
+  // TODO: need support for flush mechanism (control all zero)
+  
   initial begin
     RegDst = 0;
     Jump = 0;

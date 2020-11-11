@@ -1,15 +1,18 @@
 `timescale 1ns / 1ps
 
+// in stage ID
 module register(
   input clk,
   input [31:0] instru, // the raw 32-bit instruction
   input RegWrite,
   input RegDst,
   input [31:0] WriteData, // from WB stage
-  // input [4:0] WriteReg,
+  input [4:0] WriteReg, // from WB stage
   output [31:0] ReadData1,
   output [31:0] ReadData2
 );
+
+  // TODO: deal with the output (next_pc related)
 
   reg [31:0] RegData [31:0]; // register data
   
@@ -34,5 +37,7 @@ module register(
       end
     end
   end
+
+  // TODO: add a comparator that handles branch hazard
 
 endmodule

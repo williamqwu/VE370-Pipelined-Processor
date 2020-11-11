@@ -12,6 +12,8 @@ module alu(
 
   reg [31:0] data2;
   
+  // signextension module for ALU + basic MUX
+  // TODO: upgrade this MUX to support forwarding
   always @(ALUSrc, read2, instru) begin
     if (ALUSrc == 0) begin
       data2 = read2;

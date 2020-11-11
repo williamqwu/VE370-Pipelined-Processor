@@ -1,5 +1,7 @@
 `timescale 1ns / 1ps
 
+// in stage ID
+
 module next_pc( // TODO: modify this
   input [31:0] old, // the original program addr.
   input [31:0] instru, // the original instruction
@@ -11,6 +13,8 @@ module next_pc( // TODO: modify this
   input zero,
   output reg [31:0] next
 );
+
+  // TODO: need connection with Hazard-detection
 
   reg [31:0] sign_ext;
   reg [31:0] old_alter; // pc+4

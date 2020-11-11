@@ -1,5 +1,7 @@
 `timescale 1ns / 1ps
 
+// in EX stage
+
 module alu_control(
   input [1:0] ALUOp,
   input [5:0] instru,
