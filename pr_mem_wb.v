@@ -11,8 +11,10 @@ module pr_mem_wb(
 
   input [31:0] wData_in,
   input [4:0] writeReg_in,
+  input [31:0] instru_in,
   output reg [31:0] wData,
-  output reg [4:0] writeReg
+  output reg [4:0] writeReg,
+  output reg [31:0] instru
 );
 
   initial begin
@@ -26,6 +28,7 @@ module pr_mem_wb(
 
     wData = wData_in;
     writeReg = writeReg_in;
+    instru = instru_in;
   end
 
 endmodule

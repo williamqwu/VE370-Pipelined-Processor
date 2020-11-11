@@ -17,19 +17,17 @@ module program_counter(
     // $display("Init PC: 0x%H",out);
   end
 
-  // TODO: 2-to-1 MUX, depends on hazard-detection unit
-
   // always @(next) begin
   //   $display("Next PC: 0x%H",next);
   // end
 
   always @(posedge clk) begin
     if (c_PCWrite == 1) begin
-      if (c_if_flush == 0) begin
-        out = normal_next;
-      end else begin
-        out = bj_next;
-      end
+      // if (c_if_flush == 0) begin
+        // out = normal_next;
+      // end else begin
+        // out = bj_next;
+      // end
     end
   end
 

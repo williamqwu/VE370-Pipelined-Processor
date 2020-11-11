@@ -2,8 +2,8 @@
 
 module forward(
   input [31:0] ex_instru, // ID/EX.instru
-  input [4:0] ex_mem_wReg, // EX/MEM.WriteReg
-  input [4:0] mem_wb_wReg, // MEM/WB.WriteReg
+  input [31:0] ex_mem_instru, // EX/MEM.WriteReg
+  input [31:0] mem_wb_instru, // MEM/WB.WriteReg
   input c_ex_mem_RegWrite, // EX/MEM.RegWrite
   input c_mem_wb_RegWrite, // MEM/WB.RegWrite
   output reg [1:0] c_data1_src, // ALU.data1.src (A)
@@ -11,7 +11,10 @@ module forward(
 );
   // Note: ex_instru[25:21] == ID/EX.Rs
   //       ex_instru[20:16] == ID/EX.Rt
-  
+  wire [4:0] ex_mem_wReg,mem_wb_wReg; // exactly Rd
+  assign ex_mem_wReg = ex_mem_instru[15:11];
+  assign mem_wb_wReg = mem_wb_instru[15:11];
+
   always @(ex_instru,ex_mem_wReg,mem_wb_wReg,c_ex_mem_RegWrite,c_mem_wb_RegWrite) begin
     if(c_ex_mem_RegWrite==1 & (ex_mem_wReg != 0) & (ex_mem_wReg == ex_instru[25:21])) begin
       c_data1_src = 2'b10; // from EX/MEM
