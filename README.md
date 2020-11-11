@@ -42,14 +42,14 @@ Group Member: <br>
   - pipelined driver
 
 ## Work Distribution
-@**?**(whoever finishes single processor) system structure <br>
+@*(whoever finishes single processor)* system structure <br>
 @**xjy** patch for pipelined system <br>
 @**ygc** forwarding unit, FPGA implementation <br>
 @**lyr** hazard detection unit <br>
 @**wqh** synthesis, FPGA implementation, RTL schematic <br>
 @TBD report LaTeX https://www.overleaf.com/1952724924yppjbdyhxccp <br>
 @TBD report MD https://notes.sjtu.edu.cn/wlJIp9r3QciijvoDd4lb7g <br>
-@TBD bonus <br>
+@**lyr** bonus <br>
 
 ## Note for Tricky Issues regarding Verilog
 1. `{16{1'b1}}` vs. `16'b1`

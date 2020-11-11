@@ -21,7 +21,7 @@ module pr_ex_mem(
 
   input zero_in,
   input [31:0] ALUresult_in,
-  input [4:0] WriteReg_in, // w.b. to Reg
+  input [31:0] instru, // TODO: receive instru and transf to WriteReg (w.b. to Reg)
   output zero,
   output [31:0] ALUresult,
   output [4:0] WriteReg

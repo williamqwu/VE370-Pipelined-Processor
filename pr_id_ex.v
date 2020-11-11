@@ -30,8 +30,10 @@ module pr_id_ex(
   output reg [31:0] nextPc,
   input [31:0] ReadData1_in, // from reg
   input [31:0] ReadData2_in, 
+  input [5:0] funcode_in,
   output reg [31:0] ReadData1,
   output reg [31:0] ReadData2,
+  output reg [5:0] funcode,
   input [31:0] instru_in, // raw instruction from IF/ID-reg
   output reg [31:0] instru
 );
