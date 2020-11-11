@@ -1,6 +1,6 @@
 module ringCounter(
     input clk,
-    output reg SSDring
+    output reg [3:0] SSDring
 );
 
 always@(posedge clk)begin
