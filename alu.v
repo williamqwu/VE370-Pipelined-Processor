@@ -12,33 +12,34 @@ module alu(
   input [1:0] c_data1_src,
   input [1:0] c_data2_src,
 
-  output reg [31:0] data2_fin, // connect to DM
+  output reg [31:0] data2_fwd, // connect to DM
+  input [31:0] data2_fwd_old,
   output reg zero,
   output reg [31:0] ALUresult
 );
 
-  reg [31:0] data2;
+  // reg [31:0] data2;
   
   // signextension module for ALU + basic MUX
-  always @(ALUSrc, read2, instru) begin
-    if (ALUSrc == 0) begin
-      data2 = read2;
-    end else begin
-      // SignExt[Instru[15:0]]
-      if (instru[15] == 1'b0) begin
-        data2 = {16'b0,instru[15:0]};
-      end else begin
-        data2 = {{16{1'b1}},instru[15:0]};
-      end
-    end
-    // $display("ALU_data2: 0x%H",data2);
-  end
+  // always @(*) begin
+  //   if (ALUSrc == 0) begin
+  //     data2 = read2;
+  //   end else begin
+  //     // SignExt[Instru[15:0]]
+  //     if (instru[15] == 1'b0) begin
+  //       data2 = {16'b0,instru[15:0]};
+  //     end else begin
+  //       data2 = {{16{1'b1}},instru[15:0]};
+  //     end
+  //   end
+  //   // $display("ALU_data2: 0x%H",data2);
+  // end
 
   reg [31:0] data1_fin;
-  // reg [31:0] data2_fin;
+  reg [31:0] data2_fin;
 
 
-  always @(data1,data2,ex_mem_fwd,mem_wb_fwd,c_data1_src) begin
+  always @(*) begin
     case (c_data1_src)
       2'b00: // from current stage
         data1_fin = data1;
@@ -52,18 +53,36 @@ module alu(
     $display ("FORWARD: SRC1=%d",c_data1_src);
   end
 
-  always @(data1,data2,ex_mem_fwd,mem_wb_fwd,c_data2_src) begin
-    case (c_data2_src)
-      2'b00: // from current stage
-        data2_fin = data2;
-      2'b10: // from EX/MEM
-        data2_fin = ex_mem_fwd;
-      2'b01: // from from MEM/WB
-        data2_fin = mem_wb_fwd;
-      default:
-        $display ("Error: data2_src wrong.");
-    endcase
-    $display ("FORWARD: SRC2=%d",c_data2_src);
+  always @(*) begin
+    if (ALUSrc == 0) begin
+      case (c_data2_src)
+        2'b00: begin// from current stage
+          data2_fin = read2;
+          data2_fwd = data2_fwd_old;
+        end
+        2'b10: begin// from EX/MEM
+          data2_fin = ex_mem_fwd;
+          data2_fwd = data2_fin;
+        end
+        2'b01: begin// from from MEM/WB
+          data2_fin = mem_wb_fwd;
+          data2_fwd = data2_fin;
+        end
+        default:
+          $display ("Error: data2_src wrong.");
+      endcase
+      $display ("FORWARD: SRC2=%d",c_data2_src);
+      
+    end else begin
+      // SignExt[Instru[15:0]]
+      if (instru[15] == 1'b0) begin
+        data2_fin = {16'b0,instru[15:0]};
+      end else begin
+        data2_fin = {{16{1'b1}},instru[15:0]};
+      end
+      // $display("ALU_data2: 0x%H",data2_fin);
+      // data2_fwd = data2_fwd_old;
+    end
   end
 
   always @(data1_fin, data2_fin, ALUcontrol) begin

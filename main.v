@@ -45,7 +45,7 @@ module main(
   wire [31:0] r_read1_a,
               r_read1_b,
               r_read2_a,
-              r_read2_b;
+              r_read2_b,r_read2_d;
   wire [31:0] instru_d,instru_f,instru_h;
 
   wire c_if_flush;
@@ -212,7 +212,8 @@ module main(
     .mem_wb_fwd (memWriteData_b),
     .c_data1_src (c_data1_src_w),
     .c_data2_src (c_data2_src_w),
-    .data2_fin (rData2_ex_fwd),
+    .data2_fwd (rData2_ex_fwd),
+    .data2_fwd_old (r_read2_d),
     .zero (zero_a),
     .ALUresult (ALUresult_a)
   );
@@ -237,17 +238,19 @@ module main(
 
     .zero_in (zero_a),
     .ALUresult_in (ALUresult_a),
-    .instru_in (instru_d), 
+    .instru_in (instru_d),
+    .regData2_in (r_read2_b),
     .zero (zero_b), // no longer necessary
     .ALUresult (ALUresult_b),
     .WriteReg (WriteReg_b),
-    .instru (instru_f)
+    .instru (instru_f),
+    .regData2 (r_read2_d)
   );
   
   data_memory asset_dm(
     .clk (clk),
     .addr (ALUresult_b),
-    .wData (rData2_ex_fwd), // reg.read2 | forward
+    .wData (rData2_ex_fwd), // r_read2_d, "reg.read2 | forward"
     .ALUresult (ALUresult_b),
     .MemWrite (c_MemWrite_2_b),
     .MemRead (c_MemRead_2_b),
