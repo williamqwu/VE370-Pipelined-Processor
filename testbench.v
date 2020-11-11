@@ -3,7 +3,7 @@
 `timescale 1ns / 1ps
 `include "main.v"
 
-module testbench; // TODO: modify this
+module testbench;
   integer currTime;
   reg clk;
 

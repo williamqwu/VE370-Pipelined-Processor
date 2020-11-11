@@ -59,30 +59,6 @@ module main(
   wire [31:0] memWriteData_a,
               memWriteData_b;
 
-  data_memory asset_dm(
-    .clk (clk),
-    .addr (ALUresult_b),
-    .wData (TBD), // TODO: suppose to be reg.read2 | forward
-    .ALUresult (ALUresult_b),
-    .MemWrite (c_MemWrite_2_b),
-    .MemRead (c_MemRead_2_b),
-    .MemtoReg (c_MemtoReg_2_b),
-    .rData (memWriteData_a)
-  );
-
-  pr_mem_wb asset_memwb(
-    .clk (clk),
-    .MemtoReg_in (c_MemtoReg_2_b),
-    .RegWrite_in (c_RegWrite_2_b),
-    .MemtoReg (c_MemtoReg_3_b),
-    .RegWrite (c_RegWrite_3_b),
-
-    .wData_in (memWriteData_a), // data to Reg (W.B.)
-    .writeReg_in (WriteReg_b),
-    .wData (memWriteData_b), 
-    .writeReg (WriteReg_d)
-  );
-
   program_counter asset_pc(
     .clk (clk),
     .next (pc_in),
@@ -193,6 +169,7 @@ module main(
     .MemtoReg_in (c_MemtoReg_1_b),
     .MemWrite_in (c_MemWrite_1_b),
     .RegWrite_in (c_RegWrite_1_b),
+    .RegDst_in (c_RegDst_1_b),
     .Jump (c_Jump_2_b),
     .Branch (c_Branch_2_b),
     .Bne (c_Bne_2_b),
@@ -207,6 +184,30 @@ module main(
     .zero (zero_b),
     .ALUresult (ALUresult_b),
     .WriteReg (WriteReg_b)
+  );
+  
+  data_memory asset_dm(
+    .clk (clk),
+    .addr (ALUresult_b),
+    .wData (TBD), // TODO: suppose to be reg.read2 | forward
+    .ALUresult (ALUresult_b),
+    .MemWrite (c_MemWrite_2_b),
+    .MemRead (c_MemRead_2_b),
+    .MemtoReg (c_MemtoReg_2_b),
+    .rData (memWriteData_a)
+  );
+
+  pr_mem_wb asset_memwb(
+    .clk (clk),
+    .MemtoReg_in (c_MemtoReg_2_b),
+    .RegWrite_in (c_RegWrite_2_b),
+    .MemtoReg (c_MemtoReg_3_b),
+    .RegWrite (c_RegWrite_3_b),
+
+    .wData_in (memWriteData_a), // data to Reg (W.B.)
+    .writeReg_in (WriteReg_b),
+    .wData (memWriteData_b), 
+    .writeReg (WriteReg_d)
   );
 
 endmodule

@@ -7,7 +7,7 @@ module pr_mem_wb(
   input MemtoReg_in, // WB
   input RegWrite_in, // WB
   output reg MemtoReg,
-  output RegWrite,
+  output reg RegWrite,
 
   input [31:0] wData_in,
   input [4:0] writeReg_in,
@@ -16,11 +16,16 @@ module pr_mem_wb(
 );
 
   initial begin
-    // TODO: add initial condition
+    MemtoReg = 0;
+    RegWrite = 0;
   end
 
   always @(posedge clk) begin
-    // TODO  
+    MemtoReg = MemtoReg_in;
+    RegWrite = RegWrite_in;
+
+    wData = wData_in;
+    writeReg = writeReg_in;
   end
 
 endmodule

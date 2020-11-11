@@ -39,11 +39,35 @@ module pr_id_ex(
 );
 
   initial begin
-    // TODO: add initial condition
+    RegDst = 0;
+    Jump = 0;
+    Branch = 0;
+    Bne = 0;
+    MemRead = 0;
+    MemtoReg = 0;
+    ALUOp = 2'b00;
+    MemWrite = 0;
+    ALUSrc = 0;
+    RegWrite = 0;
   end
 
   always @(posedge clk) begin
-    // TODO  
+    RegDst = RegDst_in;
+    Jump = Jump_in;
+    Branch = Branch_in;
+    Bne = Bne_in;
+    MemRead = MemRead_in;
+    MemtoReg = MemtoReg_in;
+    ALUOp = ALUOp_in;
+    MemWrite = MemWrite_in;
+    ALUSrc = ALUSrc_in;
+    RegWrite = RegWrite_in;
+
+    nextPc = nextPc_in;
+    ReadData1 = ReadData1_in;
+    ReadData2 = ReadData2_in;
+    funcode = funcode_in;
+    instru = instru_in;
   end
 
 endmodule

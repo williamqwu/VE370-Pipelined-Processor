@@ -12,7 +12,8 @@ module register(
   output [31:0] ReadData2
 );
 
-  // TODO: deal with the output (next_pc related)
+  // TODO: deal with the output (next_pc related)`
+  
 
   reg [31:0] RegData [31:0]; // register data
   
@@ -29,12 +30,8 @@ module register(
 
   always @(posedge clk) begin // RegWrite, RegDst, WriteData, instru)
     if (RegWrite == 1'b1) begin
-      // $display("Reg_WriteData: 0x%H",WriteData);
-      if (RegDst == 1'b0) begin
-        RegData[instru[20:16]] = WriteData;
-      end else begin
-        RegData[instru[15:11]] = WriteData;
-      end
+      // $display("Reg_WriteData: 0x%H | WriteReg: %d",WriteData, WriteReg);
+      RegData[WriteReg] = WriteData;
     end
   end
 
