@@ -7,7 +7,7 @@ always@(posedge clk)begin
     if (SSDring==4'b1110) SSDring<=4'b1101;
     else if (SSDring==4'b1101) SSDring<=4'b1011;
     else if (SSDring==4'b1011) SSDring<=4'b0111;
-    else  // SSDring==4'b0001
+    else  // SSDring==4'b0111
     SSSDring<=4'b1110;
 end
 endmodule
