@@ -18,6 +18,7 @@
 
 #build files for pipelined project
 /build
+/sync_build
 
 # misc
 /opo

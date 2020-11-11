@@ -28,14 +28,15 @@ reg14, reg15, reg16, reg17, reg18, reg19, reg20, reg21, reg22, reg23, reg24, reg
     input [31:0] reg14, reg15, reg16, reg17, reg18, reg19, reg20, reg21, reg22, reg23, reg24, reg25, reg26, reg27, reg28, reg29, reg30, reg31;
     output [3:0] annode;
     output [6:0] cathod;
-    reg [3:0] annode;
-    reg [6:0] cathod;
+    // reg [3:0] annode;
+    // reg [6:0] cathod;
     wire clk;
+
     
     clock_divider clk_divide(clock, clk);
     select Select(reset, switch, PC,reg1, reg2, reg3, reg4, reg5, reg6, reg7, reg8, reg9, reg10, reg11, reg12, reg13, 
 reg14, reg15, reg16, reg17, reg18, reg19, reg20, reg21, reg22, reg23, reg24, reg25, reg26, reg27, reg28, reg29, reg30, reg31, out);
-    display Disp(clk, reset, value, cathod, annode);
+    display Disp(clk, reset, out, cathod, annode);
     
     
 endmodule
@@ -65,8 +66,8 @@ module display(clock, reset, value, cathod, annode);
     input [31:0] value;
     output [6:0] cathod;
     output [3:0] annode;
-    reg [3:0] annode;
-    reg [6:0] cathod;
+    reg [3:0] annode = 0;
+    reg [6:0] cathod = 0;
     wire [6:0] digit3;
     wire [6:0] digit2;
     wire [6:0] digit1;
