@@ -11,11 +11,24 @@ module forward(
 );
   // Note: ex_instru[25:21] == ID/EX.Rs
   //       ex_instru[20:16] == ID/EX.Rt
-  wire [4:0] ex_mem_wReg,mem_wb_wReg; // exactly Rd
-  assign ex_mem_wReg = ex_mem_instru[15:11];
-  assign mem_wb_wReg = mem_wb_instru[15:11];
+  reg [4:0] ex_mem_wReg,mem_wb_wReg; // exactly Rd
+  
+  // if I-type, use Rt; if R-type, use Rd
+  always @(*) begin
+    if(ex_mem_instru[31:26] == 0) begin
+      ex_mem_wReg = ex_mem_instru[15:11];
+    end else begin
+      ex_mem_wReg = ex_mem_instru[20:16]; // I
+    end
+    if(mem_wb_instru[31:26] == 0) begin
+      mem_wb_wReg = mem_wb_instru[15:11];
+    end else begin
+      mem_wb_wReg = mem_wb_instru[20:16]; // I
+    end
+  end
 
   always @(ex_instru,ex_mem_wReg,mem_wb_wReg,c_ex_mem_RegWrite,c_mem_wb_RegWrite) begin
+    // $display("ex_mem: 0x%H | mem_wb: 0x%H ",ex_mem_instru,mem_wb_instru);
     if(c_ex_mem_RegWrite==1 & (ex_mem_wReg != 0) & (ex_mem_wReg == ex_instru[25:21])) begin
       c_data1_src = 2'b10; // from EX/MEM
     end else if (c_mem_wb_RegWrite==1 & (mem_wb_wReg != 0) & (mem_wb_wReg == ex_instru[25:21]) &

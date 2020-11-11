@@ -45,7 +45,7 @@ module main(
               r_read1_b,
               r_read2_a,
               r_read2_b;
-  wire [31:0] instru_d,instru_f;
+  wire [31:0] instru_d,instru_f,instru_h;
 
   wire c_if_flush;
 
@@ -117,7 +117,7 @@ module main(
   hazard_det asset_hDet(
     .id_ex_memRead (c_MemRead_1_b),
     .if_id_instru (instru_b),
-    .id_ex_instru (instru_d),
+    .id_ex_instru (instru_d), // TODO
     .c_PCWrite (c_PCWrite_w),
     .c_IFIDWrite (c_IFIDWrite_w),
     .c_clearControl (c_clearControl_w)
@@ -193,8 +193,8 @@ module main(
 
   forward asset_forward(
     .ex_instru (instru_d),
-    .ex_mem_instru (instru_d), // TODO:should be exactly Rd, not wReg
-    .mem_wb_instru (instru_f), // same error, fixed
+    .ex_mem_instru (instru_f), // should be exactly Rd, not wReg
+    .mem_wb_instru (instru_h), // same error, fixed
     .c_ex_mem_RegWrite (c_RegWrite_2_b),
     .c_mem_wb_RegWrite (c_RegWrite_3_b),
     .c_data1_src (c_data1_src_w),
@@ -236,10 +236,11 @@ module main(
 
     .zero_in (zero_a),
     .ALUresult_in (ALUresult_a),
-    .instru (instru_d),
+    .instru_in (instru_d), 
     .zero (zero_b), // no longer necessary
     .ALUresult (ALUresult_b),
-    .WriteReg (WriteReg_b)
+    .WriteReg (WriteReg_b),
+    .instru (instru_f)
   );
   
   data_memory asset_dm(
@@ -262,10 +263,10 @@ module main(
 
     .wData_in (memWriteData_a), // data to Reg (W.B.)
     .writeReg_in (WriteReg_b),
-    .instru_in (instru_d),
+    .instru_in (instru_f),
     .wData (memWriteData_b), 
     .writeReg (WriteReg_d),
-    .instru (instru_f)
+    .instru (instru_h)
   );
 
 endmodule

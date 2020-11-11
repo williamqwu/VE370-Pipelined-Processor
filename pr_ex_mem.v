@@ -22,10 +22,11 @@ module pr_ex_mem(
 
   input zero_in,
   input [31:0] ALUresult_in,
-  input [31:0] instru, // receive instru and transf to WriteReg (w.b. to Reg)
+  input [31:0] instru_in, // receive instru and transf to WriteReg (w.b. to Reg)
   output reg zero,
   output reg [31:0] ALUresult,
-  output reg [4:0] WriteReg
+  output reg [4:0] WriteReg,
+  output reg [31:0] instru
 );
 
   // TODO: add support for EX.Flush
@@ -48,13 +49,14 @@ module pr_ex_mem(
     MemtoReg = MemtoReg_in;
     MemWrite = MemWrite_in;
     RegWrite = RegWrite_in;
+    instru = instru_in;
 
     zero = zero_in;
     ALUresult = ALUresult_in;
     if (RegDst_in == 1'b0) begin
-      WriteReg = instru[20:16];
+      WriteReg = instru_in[20:16];
     end else begin
-      WriteReg = instru[15:11];
+      WriteReg = instru_in[15:11];
     end
   end
 
