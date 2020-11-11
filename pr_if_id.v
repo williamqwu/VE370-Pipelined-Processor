@@ -4,6 +4,7 @@
 
 module pr_if_id(
   input clk,
+  input c_IFIDWrite,
   input [5:0] ctr_in,
   input [5:0] funcode_in,
   input [31:0] instru_in,
@@ -23,10 +24,12 @@ module pr_if_id(
   end
 
   always @(posedge clk) begin
-    ctr = ctr_in;
-    funcode = funcode_in;
-    instru = instru_in;
-    nextpc = nextpc_in;
+    if (c_IFIDWrite == 1) begin
+      ctr = ctr_in;
+      funcode = funcode_in;
+      instru = instru_in;
+      nextpc = nextpc_in;
+    end
   end
 
   always @(nextpc_in) begin

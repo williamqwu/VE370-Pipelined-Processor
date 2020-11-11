@@ -7,7 +7,7 @@
 `include "pr_if_id.v"
 `include "register.v"
 `include "control.v"
-// `include "hazard_det.v"
+`include "hazard_det.v"
 `include "pr_id_ex.v"
 `include "alu.v"
 `include "alu_control.v"
@@ -47,6 +47,10 @@ module main(
               r_read2_b;
   wire [31:0] instru_d;
 
+  wire c_PCWrite_w;
+  wire c_IFIDWrite_w;
+  wire c_clearControl_w;
+
   wire [3:0] ALUcontrol_out;
 
   wire [1:0] c_data1_src_w; // forward
@@ -70,6 +74,7 @@ module main(
     .clk (clk),
     .bj_next (pc_in),
     .normal_next (normal_next_pc),
+    .c_PCWrite (c_PCWrite_w),
     .out (nextpc_a)
   );
 
@@ -82,6 +87,7 @@ module main(
 
   pr_if_id asset_ifid(
     .clk (clk),
+    .c_IFIDWrite (c_IFIDWrite_w),
     .ctr_in (ctr_a),
     .funcode_in (funcode_a),
     .instru_in (instru_a),
@@ -103,6 +109,15 @@ module main(
     .next (pc_in)
   );
 
+  hazard_det asset_hDet(
+    .id_ex_memRead (c_MemRead_1_b),
+    .if_id_instru (instru_b),
+    .id_ex_instru (instru_d),
+    .c_PCWrite (c_PCWrite_w),
+    .c_IFIDWrite (c_IFIDWrite_w),
+    .c_clearControl (c_clearControl_w)
+  );
+
   register asset_reg(
     .clk (clk),
     .instru (instru_b),
@@ -116,6 +131,7 @@ module main(
 
   control asset_control(
     .instru (instru_b),
+    .c_clearControl (c_clearControl_w),
     .RegDst (c_RegDst_1_a),
     .Jump (c_Jump_1_a),
     .Branch (c_Branch_1_a),

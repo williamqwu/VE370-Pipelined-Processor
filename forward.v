@@ -37,7 +37,7 @@ module forward(
 endmodule
 
 
-// TODO: merge from LYR: beq hazard bonus (forwarding)
+// TODO: [bonus] merge from LYR: beq hazard (forwarding)
 module Forwarding_bonus( // created by lyr
     input [4:0] IF_ID_Rs,IF_ID_Rt,ID_EX_Rs,ID_EX_Rt,EX_MEM_Rd,MEM_WB_Rd,
     // note: MEM_WB_Rd is destination of MEM/WB register, for lw & addi: rt, add: rd
