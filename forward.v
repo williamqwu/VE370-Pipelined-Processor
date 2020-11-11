@@ -1,5 +1,42 @@
-// forwarding unit
+// forwarding unit, in stage EX
 
+module forward(
+  input [31:0] ex_instru, // ID/EX.instru
+  input [4:0] ex_mem_wReg, // EX/MEM.WriteReg
+  input [4:0] mem_wb_wReg, // MEM/WB.WriteReg
+  input c_ex_mem_RegWrite, // EX/MEM.RegWrite
+  input c_mem_wb_RegWrite, // MEM/WB.RegWrite
+  output reg [1:0] c_data1_src, // ALU.data1.src (A)
+  output reg [1:0] c_data2_src // ALU.data2.src (B)
+);
+  // Note: ex_instru[25:21] == ID/EX.Rs
+  //       ex_instru[20:16] == ID/EX.Rt
+  
+  always @(ex_instru,ex_mem_wReg,mem_wb_wReg,c_ex_mem_RegWrite,c_mem_wb_RegWrite) begin
+    if(c_ex_mem_RegWrite==1 & (ex_mem_wReg != 0) & (ex_mem_wReg == ex_instru[25:21])) begin
+      c_data1_src = 2'b10; // from EX/MEM
+    end else if (c_mem_wb_RegWrite==1 & (mem_wb_wReg != 0) & (mem_wb_wReg == ex_instru[25:21])) begin
+      c_data1_src = 2'b01; // from from MEM/WB
+    end else begin
+      c_data1_src = 2'b00; // from current stage
+    end
+  end
+
+  always @(ex_instru,ex_mem_wReg,mem_wb_wReg,c_ex_mem_RegWrite,c_mem_wb_RegWrite) begin
+    if(c_ex_mem_RegWrite==1 & (ex_mem_wReg != 0) & (ex_mem_wReg == ex_instru[20:16])) begin
+      c_data2_src = 2'b10; // from EX/MEM
+    end else if (c_mem_wb_RegWrite==1 & (mem_wb_wReg != 0) & (mem_wb_wReg == ex_instru[20:16])) begin
+      c_data2_src = 2'b01; // from from MEM/WB
+    end else begin
+      c_data2_src = 2'b00; // from current stage
+    end
+  end
+  
+
+endmodule
+
+
+// TODO: merge from LYR: beq hazard bonus (forwarding)
 module Forwarding_bonus( // created by lyr
     input [4:0] IF_ID_Rs,IF_ID_Rt,ID_EX_Rs,ID_EX_Rt,EX_MEM_Rd,MEM_WB_Rd,
     // note: MEM_WB_Rd is destination of MEM/WB register, for lw & addi: rt, add: rd

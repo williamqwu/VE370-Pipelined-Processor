@@ -10,7 +10,7 @@
 `include "pr_id_ex.v"
 `include "alu.v"
 `include "alu_control.v"
-// `include "forward.v"
+`include "forward.v"
 `include "pr_ex_mem.v"
 `include "data_memory.v"
 `include "pr_mem_wb.v"
@@ -150,12 +150,20 @@ module main(
     .ALUcontrol (ALUcontrol_out)
   );
 
+  forward asset_forward(
+    // TODO
+  );
+
   alu asset_alu(
     .data1 (r_read1_b),
     .read2 (r_read2_b),
     .instru (instru_d),
     .ALUSrc (c_ALUSrc_1_b),
     .ALUcontrol (ALUcontrol_out),
+    .ex_mem_fwd (ALUresult_b),
+    .mem_wb_fwd (memWriteData_b),
+    .c_data1_src (), // TODO
+    .c_data2_src (),
     .zero (zero_a),
     .ALUresult (ALUresult_a)
   );

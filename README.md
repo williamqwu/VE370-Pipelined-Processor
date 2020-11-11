@@ -10,6 +10,7 @@ Group Member: <br>
 - Yuru Liu
 
 ## Checklist
+### Modules
 - Functionality units
   - PC `[clock]`
     - beq
@@ -33,13 +34,25 @@ Group Member: <br>
   - Forwarding unit
   - Hazard Detection unit
 - MISC
-  - Adder
-  - MUX (*different size*)
   - Clock divider
   - ssd
-  - Testbench
-- Driver program
+- Data Bus
   - pipelined driver
+- Driver program
+  - testbench
+  - ssd driver
+
+### Signals
+  - input RegDst      // EX
+  - input Jump        // MEM
+  - input Branch      // MEM
+  - input Bne         // MEM
+  - input MemRead     // MEM
+  - input MemtoReg    // WB
+  - input [1:0] ALUOp // EX
+  - input MemWrite    // MEM 
+  - input ALUSrc      // EX
+  - input RegWrite    // WB
 
 ## Work Distribution
 @*(whoever finishes single processor)* system structure <br>
