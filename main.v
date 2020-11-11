@@ -2,6 +2,7 @@
 
 `timescale 1ns / 1ps
 `include "program_counter.v"
+`include "next_pc.v"
 `include "instru_memory.v"
 `include "pr_if_id.v"
 `include "register.v"
@@ -20,6 +21,7 @@ module main(
 );
 
   wire [31:0] pc_in;
+  wire [31:0] normal_next_pc;
  
   wire [5:0]  ctr_a,
               ctr_b,
@@ -66,7 +68,8 @@ module main(
 
   program_counter asset_pc(
     .clk (clk),
-    .next (pc_in),
+    .bj_next (pc_in),
+    .normal_next (normal_next_pc),
     .out (nextpc_a)
   );
 
@@ -86,7 +89,18 @@ module main(
     .ctr (ctr_b),
     .funcode (funcode_b),
     .instru (instru_b),
-    .nextpc (nextpc_b) // pc instead of pc+4
+    .nextpc (nextpc_b), // pc instead of pc+4
+    .normal_nextpc (normal_next_pc)
+  );
+
+  next_pc asset_nextPc(
+    .old (nextpc_b),
+    .instru (instru_b),
+    .Jump (c_Jump_1_a),
+    .Branch (c_Branch_1_a),
+    .Bne (c_Bne_1_a),
+    .zero (TBD), // TODO
+    .next (pc_in)
   );
 
   register asset_reg(

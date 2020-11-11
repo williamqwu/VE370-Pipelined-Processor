@@ -11,10 +11,7 @@ module register(
   output [31:0] ReadData1,
   output [31:0] ReadData2
 );
-
-  // TODO: deal with the output (next_pc related)`
-  
-
+ 
   reg [31:0] RegData [31:0]; // register data
   
   // initialize the regester data

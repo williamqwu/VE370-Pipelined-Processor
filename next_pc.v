@@ -2,19 +2,19 @@
 
 // in stage ID
 
-module next_pc( // TODO: modify this
-  input [31:0] old, // the original program addr.
-  input [31:0] instru, // the original instruction
+module next_pc(
+  input [31:0] old, // IF/ID.pc
+  input [31:0] instru, // IF/ID.instruction
     // [15-0] used for sign-extention
     // [25-0] used for shift-left-2
-  input Jump,
+  input Jump, // ID.control
   input Branch,
   input Bne,
-  input zero,
+  input zero, // TODO: it now depends on the RG. comparator.
   output reg [31:0] next
 );
 
-  // TODO: need connection with Hazard-detection
+  // no connection with Hazard-detection
 
   reg [31:0] sign_ext;
   reg [31:0] old_alter; // pc+4
