@@ -37,6 +37,7 @@ module pr_if_id(
         instru = 32'b11111100000000000000000000000000;
         nextpc = 32'b0;
       end
+      // $display("funcode @ if/id: 0x%H",funcode);
     end
   end
 

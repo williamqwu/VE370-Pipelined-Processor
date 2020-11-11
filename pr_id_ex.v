@@ -68,6 +68,7 @@ module pr_id_ex(
     ReadData2 = ReadData2_in;
     funcode = funcode_in;
     instru = instru_in;
+    // $display("funcode @ id/ex: 0x%H",funcode);
   end
 
 endmodule

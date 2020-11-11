@@ -8,8 +8,8 @@ module alu_control(
   output reg [3:0] ALUcontrol
 );
 
-  always @(ALUOp, instru) begin
-    // $display("** ALUOp: 0x%H",ALUOp);
+  always @(*) begin
+    $display("** ALUOp: 0x%H | instruCode: 0x%H ",ALUOp,instru);
     case (ALUOp) 
       2'b00:
         ALUcontrol = 4'b0010;

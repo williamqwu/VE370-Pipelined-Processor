@@ -21,21 +21,24 @@ module instru_memory(
     for(n=0;n<SIZE_IM;n=n+1) begin
       mem[n] = 32'b11111100000000000000000000000000;
     end
-    $readmemb("C:\\Users\\William Wu\\Documents\\Mainframe Files\\UMJI-SJTU\\1 Academy\\20 Fall\\VE370\\Project\\p2\\single_cycle\\testcases\\test_beq.txt",mem);
+    $readmemb("C:\\Users\\William Wu\\Documents\\Mainframe Files\\UMJI-SJTU\\1 Academy\\20 Fall\\VE370\\Project\\p2\\single_cycle\\testcases\\testcase.txt",mem);
     // for(n=0;n<SIZE_IM;n=n+1) begin
     //   $display("[%d] 0x%H",n,mem[n]);
     // end
     instru = 32'b11111100000000000000000000000000;
   end
 
-  always @(addr) begin
+  always @(*) begin
     if (addr == -4) begin // init
       instru = 32'b11111100000000000000000000000000;
     end else begin
       instru = mem[addr >> 2];
     end
+  end
+  always @(*)begin
     ctr = instru[31:26];
     funcode = instru[5:0];
+    // $display("funcode @ im: 0x%H",funcode);
   end
   // assign num = instru[15:0];
 

@@ -26,7 +26,8 @@ module main(
   wire [5:0]  ctr_a,
               ctr_b,
               funcode_a,
-              funcode_b;
+              funcode_b,
+              funcode_d;
   wire [31:0] instru_a,
               instru_b,
               nextpc_a,
