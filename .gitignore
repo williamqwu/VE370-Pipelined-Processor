@@ -19,6 +19,8 @@
 #build files for pipelined project
 /build
 /sync_build
+/sync_test
+/sync_fintest
 
 # misc
-/opo
+/discard
