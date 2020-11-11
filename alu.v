@@ -48,9 +48,10 @@ module alu(
       2'b01: // from from MEM/WB
         data1_fin = mem_wb_fwd;
       default:
-        $display ("Error: data1_src wrong.");
+        ;
+        // $display ("Error: data1_src wrong.");
     endcase
-    $display ("FORWARD: SRC1=%d",c_data1_src);
+    // $display ("FORWARD: SRC1=%d",c_data1_src);
   end
 
   always @(*) begin
@@ -69,9 +70,10 @@ module alu(
           data2_fwd = data2_fin;
         end
         default:
-          $display ("Error: data2_src wrong.");
+          ;
+          // $display ("Error: data2_src wrong.");
       endcase
-      $display ("FORWARD: SRC2=%d",c_data2_src);
+      // $display ("FORWARD: SRC2=%d",c_data2_src);
       
     end else begin
       // SignExt[Instru[15:0]]
@@ -107,7 +109,7 @@ module alu(
     end else begin
       zero = 0;
     end
-    $display("ALUcontrol | d1 | d2 | ALU_result: 0x%H | 0x%H | 0x%H | 0x%H",ALUcontrol,data1_fin,data2_fin,ALUresult);
+    // $display("ALUcontrol | d1 | d2 | ALU_result: 0x%H | 0x%H | 0x%H | 0x%H",ALUcontrol,data1_fin,data2_fin,ALUresult);
   end
 
 endmodule

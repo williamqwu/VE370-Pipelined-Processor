@@ -37,7 +37,7 @@ module forward(
     end else begin
       c_data1_src = 2'b00; // from current stage
     end
-    $display ("DATA1_FWD:: 0x%H | 0x%H | 0x%H",c_mem_wb_RegWrite,mem_wb_wReg,ex_instru);
+    // $display ("DATA1_FWD:: 0x%H | 0x%H | 0x%H",c_mem_wb_RegWrite,mem_wb_wReg,ex_instru);
   end
 
   always @(*) begin

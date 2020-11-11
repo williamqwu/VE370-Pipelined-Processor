@@ -9,7 +9,7 @@ module alu_control(
 );
 
   always @(*) begin
-    $display("** ALUOp: 0x%H | instruCode: 0x%H ",ALUOp,instru);
+    // $display("** ALUOp: 0x%H | instruCode: 0x%H ",ALUOp,instru);
     case (ALUOp) 
       2'b00:
         ALUcontrol = 4'b0010;
