@@ -8,6 +8,8 @@ module register(
   input RegDst,
   input [31:0] WriteData, // from WB stage
   input [4:0] WriteReg, // from WB stage
+  input [4:0] syn_reg_dst, // syn
+  output reg [31:0] syn_reg_out, // syn
   output reg [31:0] ReadData1,
   output reg [31:0] ReadData2,
   output reg reg_zero // comparator result
@@ -21,6 +23,10 @@ module register(
     for(i=0;i<32;i=i+1) begin
       RegData[i] = 32'b0;
     end
+  end
+
+  always @(*)begin
+    syn_reg_out = RegData[syn_reg_dst];
   end
 
   always @(*) begin

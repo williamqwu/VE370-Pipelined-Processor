@@ -17,7 +17,10 @@
 `include "pr_mem_wb.v"
 
 module main(
-  input clk // clock signal for PC, RD, PRs
+  input clk, // clock signal for PC, RD, PRs
+  input [4:0] syn_reg_dst,
+  output [31:0] syn_reg_out,
+  output [31:0] syn_pc
 );
 
   wire [31:0] pc_in;
@@ -72,6 +75,8 @@ module main(
 
   wire [31:0] memWriteData_a,
               memWriteData_b;
+
+  assign syn_pc = nextpc_a;
 
   program_counter asset_pc(
     .clk (clk),
@@ -130,7 +135,9 @@ module main(
     .RegWrite (c_RegWrite_3_b), // from WB stage
     .RegDst (c_RegDst_1_a),
     .WriteData (memWriteData_b), 
-    .WriteReg (WriteReg_d), 
+    .WriteReg (WriteReg_d),
+    .syn_reg_dst (syn_reg_dst),
+    .syn_reg_out (syn_reg_out),
     .ReadData1 (r_read1_a),
     .ReadData2 (r_read2_a),
     .reg_zero (zero_reg)

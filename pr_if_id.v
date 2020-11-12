@@ -22,6 +22,7 @@ module pr_if_id(
     funcode = 6'b000000;
     instru = 32'b11111100000000000000000000000000;
     nextpc = 32'b0;
+    normal_nextpc = 32'b0;
   end
 
   always @(posedge clk) begin
@@ -41,7 +42,7 @@ module pr_if_id(
     end
   end
 
-  always @(nextpc_in) begin
+  always @(*) begin
     normal_nextpc = nextpc_in + 4;
   end
 

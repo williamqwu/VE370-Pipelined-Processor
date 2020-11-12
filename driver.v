@@ -10,47 +10,75 @@ module driver(
 );
 
   reg [15:0] data;
-  reg clock=0;
-  //reg tmp=0;
-  wire[15:0] tmp;
+  reg clock;
+  reg [15:0] tmp2;
+  // reg [7:0] lock;
+  wire [4:0] regDst;
+  wire [31:0] regOut;
+  wire [31:0] pcOut;
 
   main uut(
-    .clk (clock)
+    .clk (clock),
+    .syn_reg_dst (regDst),
+    .syn_reg_out (regOut),
+    .syn_pc (pcOut)
   );
+
   io asset_io(clk, data, A, ssd);
 
   initial begin
-    // clock = 0;
-    // tmp = 0;
-    uut.asset_pc.out = -4;
+    clock = 0;
+    tmp2 = 16'b0;
+    // lock = 0;
+    // uut.asset_pc.out = -4;
   end
 
-  always @(*) begin
+  assign regDst = switch[4:0];
+
+  always @(switch) begin
     case (switch[7:5])
       3'b000: // normal mode, display reg value
-        data = uut.asset_reg.RegData[switch[4:0]][15:0]; // FIXME: separate reg?
+        data = regOut[15:0];
+        // data = uut.asset_reg.RegData[switch[4:0]][15:0];
       3'b001: // display PC
-        data = uut.asset_pc.out[15:0];
+        data = pcOut[15:0];
+        // data = uut.asset_pc.out[15:0];
       3'b010: // display RegID
         data = switch[4:0];
-      3'b011:
-        data = tmp;
+      3'b011: // debug
+        data = tmp2;
+        // data = {8'b0,{uut.asset_hDet.c_PCWrite_w},{uut.asset_nextPc.c_if_flush},{uut.asset_ifid.instru_b[31:26]}};
       default: // undefined
         data = 16'b0101010110101100;
     endcase
   end
 
-  assign tmp[15:12] = uut.asset_pc.normal_next;
-  assign tmp[12:8] = uut.asset_ifid.clk;
-  assign tmp[7:0] = uut.asset_im.instru;
+  // assign tmp[15:12] = uut.asset_pc.normal_next;
+  // assign tmp[12:8] = uut.asset_ifid.clk;
+  // assign tmp[7:0] = uut.asset_im.instru;
+
+  // always @(posedge clk) begin
+  //   // clock = ~clock;
+  //   if (reset==1) begin
+  //     if (lock == 0) begin
+  //       lock <= lock + 1;
+  //       clock <= 1;
+  //     end else if (lock < 200) begin
+  //       lock <= lock + 1;
+  //     end else begin
+  //       ;
+  //     end
+  //   end else begin
+  //     clock <= 0;
+  //   end
+  // end
+  always @(posedge clock) begin
+    if (tmp2 < 500) tmp2 <= tmp2 + 1;
+  end
 
   always @(posedge reset) begin
     clock = ~clock;
   end
-
-  // always @(posedge reset) begin
-  //   tmp = tmp + 1;
-  // end
 
 endmodule
 
