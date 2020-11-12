@@ -23,6 +23,21 @@ module register(
 
   assign ReadData1 = RegData[instru[25:21]];
   assign ReadData2 = RegData[instru[20:16]];
+  
+  // no need
+  // always @(*) begin
+  //   if(WriteReg==instru[25:21] && RegWrite==1) begin
+  //     ReadData1 = WriteData;
+  //   end else begin
+  //     ReadData1 = RegData[instru[25:21]];
+  //   end
+    
+  //   if(WriteReg==instru[20:16] && RegWrite==1) begin
+  //     ReadData2 = WriteData;
+  //   end else begin
+  //     ReadData2 = RegData[instru[20:16]];
+  //   end
+  // end
 
   always @(posedge clk) begin // RegWrite, RegDst, WriteData, instru)
     if (RegWrite == 1'b1) begin
@@ -34,5 +49,7 @@ module register(
       end
     end
   end
+
+
 
 endmodule
