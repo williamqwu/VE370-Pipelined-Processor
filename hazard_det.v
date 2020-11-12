@@ -13,6 +13,12 @@ module hazard_det(
   // if_id_instru[25:21]: IF/ID.Rs
   // if_id_instru[20:16]: IF/ID.Rt
 
+  initial begin
+    c_PCWrite = 1;
+    c_IFIDWrite = 1;
+    c_clearControl = 0;
+  end
+
   always @(*) begin
     if (id_ex_memRead==1 && ((id_ex_instru[20:16] == if_id_instru[25:21]) || (id_ex_instru[20:16] == if_id_instru[20:16]))) begin
       c_PCWrite = 0; // if PCWrite==0, don't write in new instruction, IM decode the current instruction again
