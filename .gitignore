@@ -17,9 +17,7 @@
 /single_cycle/.Xil
 
 #build files for pipelined project
-/build
-/sync_build
-/sync_test
+/build_sim
 /sync_fintest
 
 # misc

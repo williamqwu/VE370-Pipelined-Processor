@@ -6,9 +6,15 @@
 module testbench;
   integer currTime;
   reg clk;
+  reg [4:0] regDst = 5'b01000;
+  wire [31:0] regOut;
+  wire [31:0] pcOut;
 
   main uut(
-    .clk (clk)
+    .clk (clk),
+    .syn_reg_dst (regDst),
+    .syn_reg_out (regOut),
+    .syn_pc (pcOut)
   );
 
   initial begin

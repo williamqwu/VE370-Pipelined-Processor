@@ -21,7 +21,10 @@ module instru_memory(
     for(n=0;n<SIZE_IM;n=n+1) begin
       mem[n] = 32'b11111100000000000000000000000000;
     end
-    $readmemb("C:\\Users\\William Wu\\Documents\\Mainframe Files\\UMJI-SJTU\\1 Academy\\20 Fall\\VE370\\Project\\p2\\single_cycle\\testcases\\testcase.txt",mem);
+    $readmemb("C:/Users/William Wu/Documents/Mainframe Files/UMJI-SJTU/1 Academy/20 Fall/VE370/Project/p2/testcases/testcase.txt",mem);
+    // $readmemb("../../../../../testcases/testcase.txt",mem); // simulation
+    // $readmemb("../../../testcases/testcase.txt",mem); // bitstream
+    
     // for(n=0;n<SIZE_IM;n=n+1) begin
     //   $display("[%d] 0x%H",n,mem[n]);
     // end
