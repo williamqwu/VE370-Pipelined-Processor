@@ -59,13 +59,21 @@ Group Member: <br>
 @**xjy** patch for pipelined system <br>
 @**ygc** forwarding unit, FPGA implementation <br>
 @**lyr** hazard detection unit <br>
-@**wqh** synthesis, FPGA implementation, RTL schematic <br>
-@TBD report LaTeX https://www.overleaf.com/1952724924yppjbdyhxccp <br>
-@TBD report MD https://notes.sjtu.edu.cn/wlJIp9r3QciijvoDd4lb7g <br>
+@**wqh** debug, synthesis, FPGA implementation <br>
+@**xjy/lyr** RTL schematic <br>
+@~~report LaTeX https://www.overleaf.com/1952724924yppjbdyhxccp~~ <br>
+@report MD https://notes.sjtu.edu.cn/wlJIp9r3QciijvoDd4lb7g <br>
 @**lyr** bonus <br>
 
 ## Note for Tricky Issues regarding Verilog
 1. `{16{1'b1}}` vs. `16'b1`
 2. delay in `initial`
 3. sync vs async (which unit need to be controlled by `clk`)
-4. *Nothing more. The rest is just a LinkGame.*
+4. `reg` is only for a 2-bit number
+5. *Nothing more. The rest is just a LinkGame.*
+
+## Release
+| Bit | Commit Hash |
+| --- | ----------- |
+| driver_1358.bit | 4189f856d61629a9d95b7a33ac307b1ca5e337ad |
+
