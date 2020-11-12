@@ -43,6 +43,8 @@ module register(
     end
   end
 
+  // TODO: connect EXMEMread
+
   always @(posedge clk) begin // RegWrite, RegDst, WriteData, instru)
     if (RegWrite == 1'b1) begin
       $display("Reg_WriteData: 0x%H | WriteReg: %d",WriteData, WriteReg);

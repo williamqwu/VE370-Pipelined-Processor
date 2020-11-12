@@ -33,29 +33,51 @@ module hazard_det(
 
 endmodule
 
+module bonus_hazard(
+input branch,IDEXregwrite,IDEXmemread,EXMEMmemread,EXMEMregwrite,jump,equal,
+input [4:0] ReadReg1,ReadReg2,
+input [4:0] IDEXrd,IDEXrt,IFIDrs,IFIDrt,EXMEMrt,
+output reg IDflush,EXflush,PCwrite,IFIDwrite,
+output IFflush
+    );
+initial begin
+IDflush=0;
+EXflush=0;
+PCwrite=1;
+IFIDwrite=1;
+end
 
-module Hazard_bonus( // TODO: [bonus] consider control hazard: branch
-  // created by lyr
-    input [4:0] IF_ID_Rs,IF_ID_Rt,ID_EX_Rt,EX_MEM_Rt,ID_EX_Rd,
-    input ID_EX_MemRead,EX_MEM_MemRead,ID_beq,ID_bne,ID_EX,RegWrite,ID_jump,ID_equal,ID_EX_RegWrite,
-    output PCWrite,IF_ID_Write,ID_EX_Flush,IF_Flush
-);
+always@(*) begin
+if (IDEXmemread==1 && (IDEXrt==IFIDrs || IDEXrt==IFIDrt)) begin // lw 
+PCwrite=0;
+IFIDwrite=0;
+IDflush=1;
+end
 
-wire PCHold; // if PCHold==1, hold PC and IF/ID
+if (branch) begin
+if (IDEXregwrite && IDEXrd!=5'b0 && (IDEXrd==ReadReg1 || IDEXrd==ReadReg2)) begin // r-format 1&2 hazard
+PCwrite=0;
+IFIDwrite=0;
+IDflush=1;
+end
+if (IDEXregwrite && IDEXrd==5'b0 && (IDEXrt==ReadReg1 || IDEXrt==ReadReg2)) begin // andi 1&2 hazard
+PCwrite=0;
+IFIDwrite=0;
+IDflush=1;
+end
+if (IDEXmemread && (IDEXrt==ReadReg1 || IDEXrt==ReadReg2)) begin // lw 1&2 hazard
+PCwrite=0;
+IFIDwrite=0;
+IDflush=1;
+end
+if (EXMEMmemread && (EXMEMrt==ReadReg1 || EXMEMrt==ReadReg2)) begin // lw 1&3 hazard
+PCwrite=0;
+IFIDwrite=0;
+IDflush=1;
+EXflush=1;
+end
+end
+end
 
-assign PCHold = ( (ID_EX_MemRead) && (ID_EX_Rt == IF_ID_Rs || ID_EX_Rt == IF_ID_Rt) ) // lw hazard
-                || ( (ID_beq || ID_bne) && (ID_EX_MemRead) && (ID_EX_Rt == IF_ID_Rs || ID_EX_Rt == IF_ID_Rt) ) // lw followed by branch
-                || ( (ID_beq || ID_bne) && (EX_MEM_MemRead) && (EX_MEM_Rt == IF_ID_Rs || EX_MEM_Rt == IF_ID_Rt) ) // lw followed by nop and then branch
-                || ( (ID_beq || ID_bne) && (ID_EX_RegWrite) && (ID_EX_Rd != 5'b0) && (ID_EX_Rd == IF_ID_Rs || ID_EX_Rd == IF_ID_Rt) ) // R-format followed by branch
-                || ( (ID_beq || ID_bne) && (ID_EX_RegWrite) && (ID_EX_Rd == 5'b0) && (ID_EX_Rt == IF_ID_Rs || ID_EX_Rt == IF_ID_Rt) ); // addi followed by branch
-
-// note we leave out the case that R-format followed by a nop then a branch, because that is solved by forwarding path
-assign PCWrite=~PCHold; // if PCWrite==0, don't write in new instruction, IM decode the current instruction again
-
-assign IF_ID_Write=~PCHold; // if IF_ID_Write==0, IF/ID register keeps the current instruction
-
-assign ID_EX_Flush=PCHold; // if ID_EX_Flush=1, all control signals in ID/EX are 0 (implemented in ID/EX register later)
- 
-assign IF_Flush = (PCHold==0) && ( (ID_jump) || (ID_beq && ID_equal) || (ID_bne && ID_equal)); 
-
+assign IFflush=(~PCwrite && branch && equal) || jump; // FIXME
 endmodule
