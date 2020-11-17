@@ -33,51 +33,52 @@ module hazard_det(
 
 endmodule
 
+// TODO: [bonus] merge from LYR
 module bonus_hazard(
-input branch,IDEXregwrite,IDEXmemread,EXMEMmemread,EXMEMregwrite,jump,equal,
-input [4:0] ReadReg1,ReadReg2,
-input [4:0] IDEXrd,IDEXrt,IFIDrs,IFIDrt,EXMEMrt,
-output reg IDflush,EXflush,PCwrite,IFIDwrite,
-output IFflush
-    );
-initial begin
-IDflush=0;
-EXflush=0;
-PCwrite=1;
-IFIDwrite=1;
-end
+  input branch,IDEXregwrite,IDEXmemread,EXMEMmemread,EXMEMregwrite,jump,equal,
+  input [4:0] ReadReg1,ReadReg2,
+  input [4:0] IDEXrd,IDEXrt,IFIDrs,IFIDrt,EXMEMrt,
+  output reg IDflush,EXflush,PCwrite,IFIDwrite,
+  output IFflush
+);
+  initial begin
+    IDflush=0;
+    EXflush=0;
+    PCwrite=1;
+    IFIDwrite=1;
+  end
 
-always@(*) begin
-if (IDEXmemread==1 && (IDEXrt==IFIDrs || IDEXrt==IFIDrt)) begin // lw 
-PCwrite=0;
-IFIDwrite=0;
-IDflush=1;
-end
+  always@(*) begin
+    if (IDEXmemread==1 && (IDEXrt==IFIDrs || IDEXrt==IFIDrt)) begin // lw 
+      PCwrite=0;
+      IFIDwrite=0;
+      IDflush=1;
+    end
 
-if (branch) begin
-if (IDEXregwrite && IDEXrd!=5'b0 && (IDEXrd==ReadReg1 || IDEXrd==ReadReg2)) begin // r-format 1&2 hazard
-PCwrite=0;
-IFIDwrite=0;
-IDflush=1;
-end
-if (IDEXregwrite && IDEXrd==5'b0 && (IDEXrt==ReadReg1 || IDEXrt==ReadReg2)) begin // andi 1&2 hazard
-PCwrite=0;
-IFIDwrite=0;
-IDflush=1;
-end
-if (IDEXmemread && (IDEXrt==ReadReg1 || IDEXrt==ReadReg2)) begin // lw 1&2 hazard
-PCwrite=0;
-IFIDwrite=0;
-IDflush=1;
-end
-if (EXMEMmemread && (EXMEMrt==ReadReg1 || EXMEMrt==ReadReg2)) begin // lw 1&3 hazard
-PCwrite=0;
-IFIDwrite=0;
-IDflush=1;
-EXflush=1;
-end
-end
-end
+    if (branch) begin
+      if (IDEXregwrite && IDEXrd!=5'b0 && (IDEXrd==ReadReg1 || IDEXrd==ReadReg2)) begin // r-format 1&2 hazard
+        PCwrite=0;
+        IFIDwrite=0;
+        IDflush=1;
+      end
+      if (IDEXregwrite && IDEXrd==5'b0 && (IDEXrt==ReadReg1 || IDEXrt==ReadReg2)) begin // andi 1&2 hazard
+        PCwrite=0;
+        IFIDwrite=0;
+        IDflush=1;
+      end
+      if (IDEXmemread && (IDEXrt==ReadReg1 || IDEXrt==ReadReg2)) begin // lw 1&2 hazard
+        PCwrite=0;
+        IFIDwrite=0;
+        IDflush=1;
+      end
+      if (EXMEMmemread && (EXMEMrt==ReadReg1 || EXMEMrt==ReadReg2)) begin // lw 1&3 hazard
+        PCwrite=0;
+        IFIDwrite=0;
+        IDflush=1;
+        EXflush=1;
+      end
+    end
+  end
 
-assign IFflush=(~PCwrite && branch && equal) || jump; // FIXME
+  assign IFflush=(~PCwrite && branch && equal) || jump; // FIXME
 endmodule

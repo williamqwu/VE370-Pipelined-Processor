@@ -12,7 +12,6 @@ module driver(
   reg [15:0] data;
   reg clock;
   reg [15:0] tmp2;
-  // reg [7:0] lock;
   wire [4:0] regDst;
   wire [31:0] regOut;
   wire [31:0] pcOut;
@@ -29,8 +28,6 @@ module driver(
   initial begin
     clock = 0;
     tmp2 = 16'b0;
-    // lock = 0;
-    // uut.asset_pc.out = -4;
   end
 
   assign regDst = switch[4:0];
@@ -39,39 +36,17 @@ module driver(
     case (switch[7:5])
       3'b000: // normal mode, display reg value
         data = regOut[15:0];
-        // data = uut.asset_reg.RegData[switch[4:0]][15:0];
       3'b001: // display PC
         data = pcOut[15:0];
-        // data = uut.asset_pc.out[15:0];
       3'b010: // display RegID
         data = switch[4:0];
       3'b011: // debug
         data = tmp2;
-        // data = {8'b0,{uut.asset_hDet.c_PCWrite_w},{uut.asset_nextPc.c_if_flush},{uut.asset_ifid.instru_b[31:26]}};
       default: // undefined
         data = 16'b0101010110101100;
     endcase
   end
 
-  // assign tmp[15:12] = uut.asset_pc.normal_next;
-  // assign tmp[12:8] = uut.asset_ifid.clk;
-  // assign tmp[7:0] = uut.asset_im.instru;
-
-  // always @(posedge clk) begin
-  //   // clock = ~clock;
-  //   if (reset==1) begin
-  //     if (lock == 0) begin
-  //       lock <= lock + 1;
-  //       clock <= 1;
-  //     end else if (lock < 200) begin
-  //       lock <= lock + 1;
-  //     end else begin
-  //       ;
-  //     end
-  //   end else begin
-  //     clock <= 0;
-  //   end
-  // end
   always @(posedge clock) begin
     if (tmp2 < 500) tmp2 <= tmp2 + 1;
   end
@@ -91,9 +66,6 @@ module io(
 
   wire d500;
   wire [6:0] o1,o2,o3,o4;  
-  // reg [6:0] ssd;
-
-  // reg [15:0] const = 16'b0000000100100011;
   
   divider500 di500(clk,d500);
   ring_cnt_4 rt(d500,A);
@@ -103,9 +75,6 @@ module io(
   tssd outssd3(data[11:8],o3);
   tssd outssd4(data[15:12],o4); // right-most
   
-  // always @(*) begin
-  //   const = {{4{switch[0]}},{4{switch[1]}},{4{switch[2]}},{4{switch[3]}}};
-  // end
   always @(posedge clk) begin
     case (A)
       4'b1110: ssd = o1;

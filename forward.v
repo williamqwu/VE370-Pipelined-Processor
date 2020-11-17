@@ -1,3 +1,5 @@
+`timescale 1ns / 1ps
+
 // forwarding unit, in stage EX
 
 module forward(
@@ -11,6 +13,7 @@ module forward(
 );
   // Note: ex_instru[25:21] == ID/EX.Rs
   //       ex_instru[20:16] == ID/EX.Rt
+  
   reg [4:0] ex_mem_wReg,mem_wb_wReg; // exactly Rd
   
   // if I-type, use Rt; if R-type, use Rd

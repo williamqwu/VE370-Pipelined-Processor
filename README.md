@@ -1,5 +1,5 @@
 # VE370 Project2
-*A pipelined processor with hazard detection for the course VE370 from UM-SJTU JI.*
+*A pipelined processor with hazard detection for the course VE370 (FA2020) of UM-SJTU JI.*
 
 ## Contributors
 Group ID: 20 <br>
@@ -8,6 +8,19 @@ Group Member: <br>
 - Jiaying Xu
 - Qinhang Wu
 - Yuru Liu
+
+## Release
+| Bit | Commit Hash |
+| --- | ----------- |
+| driver_1358.bit | 4189f856d61629a9d95b7a33ac307b1ca5e337ad |
+
+## Note for Tricky Issues regarding Verilog
+1. `{16{1'b1}}` vs. `16'b1`
+2. delay in `initial`
+3. sync vs async (which unit should be controlled by `clk`)
+4. `reg` is only for a 2-bit number
+5. It is recommended to use a suitable IDE to view and edit this project, i.e., `VS Code` + `mshr-h.veriloghdl` + `xvlog`(linter)
+6. *Nothing more. The rest is just a LinkGame.*
 
 ## Checklist
 ### Modules
@@ -61,19 +74,11 @@ Group Member: <br>
 @**lyr** hazard detection unit <br>
 @**wqh** debug, synthesis, FPGA implementation <br>
 @**xjy/lyr** RTL schematic <br>
-@~~report LaTeX https://www.overleaf.com/1952724924yppjbdyhxccp~~ <br>
 @report MD https://notes.sjtu.edu.cn/wlJIp9r3QciijvoDd4lb7g <br>
 @**lyr** bonus <br>
 
-## Note for Tricky Issues regarding Verilog
-1. `{16{1'b1}}` vs. `16'b1`
-2. delay in `initial`
-3. sync vs async (which unit need to be controlled by `clk`)
-4. `reg` is only for a 2-bit number
-5. *Nothing more. The rest is just a LinkGame.*
+## Honor Code
+If there is similar course materials assigned in the future, it is the responsibility of JI students not to copy or modify these codes, or MD files because it is against the Honor Code. The owner of this repository doesn't take any commitment for other's faults.
 
-## Release
-| Bit | Commit Hash |
-| --- | ----------- |
-| driver_1358.bit | 4189f856d61629a9d95b7a33ac307b1ca5e337ad |
-
+## Issues
+You're welcomed to raise any issues regarding this project.
