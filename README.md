@@ -68,14 +68,11 @@ Group Member: <br>
   - input RegWrite    // WB
 
 ## Work Distribution
-@*(whoever finishes single processor)* system structure <br>
-@**xjy** patch for pipelined system <br>
-@**ygc** forwarding unit, FPGA implementation <br>
-@**lyr** hazard detection unit <br>
-@**wqh** debug, synthesis, FPGA implementation <br>
-@**xjy/lyr** RTL schematic <br>
-@report MD https://notes.sjtu.edu.cn/wlJIp9r3QciijvoDd4lb7g <br>
-@**lyr** bonus <br>
+@*(whoever finishes single processor)* single system structure <br>
+@**wqh** system design, debug, module integration, synthesis, FPGA implementation <br>
+@**xjy** patch for pipelined system, RTL schematic, debug, report <br>
+@**lyr** hazard det. unit, branch bonus unit, RTL schematic, report <br>
+@**ygc** for. unit, FPGA implementation, debug, report <br>
 
 ## Honor Code
 If there is similar course materials assigned in the future, it is the responsibility of JI students not to copy or modify these codes, or MD files because it is against the Honor Code. The owner of this repository doesn't take any commitment for other's faults.
